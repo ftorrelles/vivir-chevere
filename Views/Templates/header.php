@@ -25,7 +25,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="#">Perfil</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?php echo base_url; ?>Usuarios/salir">Cerrar Sesión</a>
+                        <a class="dropdown-item" href="<?php echo base_url; ?>Usuarios/salir">Cerrar Sessión</a>
                     </div>
                 </li>
             </ul>
