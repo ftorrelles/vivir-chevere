@@ -10,7 +10,7 @@ class Clientes extends Controller{
     }
     public function index()
     {
-        $this->views->getView($this, "index");
+        $this->views->getView($this, "index", $data);
     }
     public function Listar()
     {

@@ -10,7 +10,7 @@
             <th>Dni</th>
             <th>Nombre</th>
             <th>Telefono</th>
-            <th>Direcccion</th>
+            <th>Direccion</th>
             <th>Estado</th>
             <th></th>
         </tr>
