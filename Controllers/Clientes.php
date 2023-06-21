@@ -10,7 +10,7 @@ class Clientes extends Controller{
     }
     public function index()
     {
-        $this->views->getView($this, "index", $data);
+        $this->views->getView($this, "index");
     }
     public function Listar()
     {
@@ -31,61 +31,33 @@ class Clientes extends Controller{
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function validar()
-    {
-        if (empty($_POST['usuario']) || empty($_POST['clave'])) {
-            $msg = "Los campos estan vacios";
-        }else{
-            $usuario = $_POST['usuario'];
-            $clave = $_POST['clave'];
-            $hash = hash("SHA256", $clave);
-            $data = $this->model->getUsuario($usuario, $hash);
-            if ($data) {
-                $_SESSION['id_usuario'] = $data['id'];
-                $_SESSION['usuario'] = $data['usuario'];
-                $_SESSION['nombre'] = $data['nombre'];
-                $_SESSION['activo'] = true;
-                $msg = "ok";
-            }else{
-                $msg = "Usuario o contraseña incorrecto";
-            }
-
-        }
-        echo json_encode($msg, JSON_UNESCAPED_UNICODE);
-        die();
-    }
     public function registrar()
     {
-        $usuario = $_POST['usuario'];
+        $dni = $_POST['dni'];
         $nombre = $_POST['nombre'];
-        $clave = $_POST['clave'];
-        $confirmar = $_POST['confirmar'];
-        $caja = $_POST['caja'];
+        $telefono = $_POST['telefono'];
+        $direccion = $_POST['direccion'];
         $id = $_POST['id'];
-        $hash = hash("SHA256", $clave);
-        if (empty($usuario) || empty($nombre) || empty($caja) ) {
+        if (empty($dni) || empty($nombre) || empty($telefono) || empty($direccion) ) {
             $msg = "Todos los campos son obligatorios";
         }else{
-            if ($id == "") {
-                if ($clave != $confirmar) {
-                    $msg = "Las contraseñas no coinciden";
-                }else{   
-                    $data = $this->model->registrarUsuario($usuario, $nombre, $hash, $caja);
-                    if ($data == "ok") {
-                        $msg = "si";
-                    }else if($data = "existe"){
-                        $msg = "El usuario ya existe";
-                    }else {
-                        $msg = "Error al registrar el usuario";
-                    }
-                }
-            }else{
-                $data = $this->model->modificarUsuario($usuario, $nombre, $caja, $id);
-                if ($data == "modificado") {
-                    $msg = "modificado";
+            if ($id == "") {   
+                $data = $this->model->registrarCliente($dni, $nombre, $telefono, $direccion);
+                if ($data == "ok") {
+                    $msg = "si";
+                }else if($data = "existe"){
+                    $msg = "El dni ya existe";
                 }else {
-                    $msg = "Error al modificar el usuario";
+                    $msg = "Error al registrar el cliente";
                 }
+            }
+        }else{
+            $data = $this->model->modificarUsuario($dni, $nombre, $telefono, $id);
+            if ($data == "modificado") {
+                $msg = "modificado";
+            }else {
+                $msg = "Error al modificar el dni";
+            }
             }
         } 
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
@@ -103,7 +75,7 @@ class Clientes extends Controller{
         if ($data == 1) {
             $msg = "ok";
         }else {
-            $msg = "Error al eliminar el usuario";
+            $msg = "Error al eliminar el dni";
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
@@ -114,7 +86,7 @@ class Clientes extends Controller{
         if ($data == 1) {
             $msg = "ok";
         }else {
-            $msg = "Error al reingresar el usuario";
+            $msg = "Error al reingresar el dni";
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();

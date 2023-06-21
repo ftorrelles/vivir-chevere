@@ -30,37 +30,23 @@
             <div class="modal-body">
                 <form method="post" id="frmCliente">
                     <div class="form-group">
-                        <label for="usuario">Usuario</label>
+                        <label for="dni">Dni</label>
                         <input type="hidden" id="id" name="id">
-                        <input id="usuario" class="form-control" type="text" name="usuario" placeholder="Usuario">
+                        <input id="dni" class="form-control" type="text" name="dni" placeholder="Documento de identidad">
                     </div>
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre de usuario">
-                    </div>
-                    <div class="row" id="claves">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="clave">contraseña</label>
-                                <input id="clave" class="form-control" type="password" name="clave" placeholder="Contraseña">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="confirmar">Confirmar contraseña</label>
-                                <input id="confirmar" class="form-control" type="password" name="confirmar" placeholder="Confirmar contraseña">
-                            </div>
-                        </div>
+                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del cliente">
                     </div>
                     <div class="form-group">
-                        <label for="caja">Caja</label>
-                        <select id="caja" class="form-control" name="caja">
-                        <?php foreach ($data['cajas'] as $row){ ?>    
-                            <option value="<?php echo $row['id'] ?>"><?php echo $row['caja'] ?></option>
-                            <?php } ?>
-                        </select>
+                        <label for="telefono">Teléfono</label>
+                        <input id="telefono" class="form-control" type="text" name="telefono" placeholder="Numero de telefono">
                     </div>
-                    <button class="btn btn-primary" type="button" onclick="registrarUser(event);" id="btnAccion">Registrar</button>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <textarea id="direccion" class="form-control" name="direccion" placeholder="Dirección" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="button" onclick="registrarCli(event);" id="btnAccion">Registrar</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                 </form>
             </div>

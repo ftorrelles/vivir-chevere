@@ -217,14 +217,13 @@ function frmCliente() {
     $("#nuevo_cliente").modal("show");
     document.getElementById("id").value = "";
 }
-function registrarUser(e) {
+function registrarCli(e) {
     e.preventDefault();
-    const usuario = document.getElementById("usuario");
+    const dni = document.getElementById("dni");
     const nombre = document.getElementById("nombre");
-    const clave = document.getElementById("clave");
-    const confirmar = document.getElementById("confirmar");
-    const caja = document.getElementById("caja");
-    if (usuario.value == "" || nombre.value == "" || caja.value == "") {
+    const telefono = document.getElementById("telefono");
+    const direccion = document.getElementById("direccion");
+    if (dni.value == "" || nombre.value == "" || telefono.value == "" || direccion.value == "") {
         Swal.fire({
             position: 'top-end',
             icon: 'error',
@@ -233,8 +232,8 @@ function registrarUser(e) {
             timer: 3000
           })
     }else{
-        const url = base_url + "Usuarios/registrar";
-        const frm = document.getElementById("frmUsuario");
+        const url = base_url + "Clientes/registrar";
+        const frm = document.getElementById("frmCliente");
         const http = new XMLHttpRequest();
         http.open("POST", url, true);
         http.send(new FormData(frm));
@@ -245,23 +244,23 @@ function registrarUser(e) {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Usuario registrado con exito',
+                        title: 'Cliente registrado con exito',
                         showConfirmButton: false,
                         timer: 3000
                       })
                       frm.reset();
-                      $("#nuevo_usuario").modal("hide");
-                      tblUsuarios.ajax.reload();
+                      $("#nuevo_cliente").modal("hide");
+                      //tblUsuarios.ajax.reload();
                 }else if(res == "modificado"){
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Usuario modificado con exito',
+                        title: 'Cliente modificado con exito',
                         showConfirmButton: false,
                         timer: 3000
                     })
-                    $("#nuevo_usuario").modal("hide");
-                    tblUsuarios.ajax.reload();
+                    $("#nuevo_cliente").modal("hide");
+                    //tblUsuarios.ajax.reload();
                 } else{
                     Swal.fire({
                         position: 'top-end',
