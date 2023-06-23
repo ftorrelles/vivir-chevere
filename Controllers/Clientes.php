@@ -14,7 +14,7 @@ class Clientes extends Controller{
     }
     public function Listar()
     {
-        $data = $this->model->getUsuarios();
+        $data = $this->model->getClientes();
         for ($i=0; $i < count($data); $i++) {
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
@@ -50,14 +50,14 @@ class Clientes extends Controller{
                 }else {
                     $msg = "Error al registrar el cliente";
                 }
-            }
-        }else{
-            $data = $this->model->modificarUsuario($dni, $nombre, $telefono, $id);
-            if ($data == "modificado") {
-                $msg = "modificado";
-            }else {
-                $msg = "Error al modificar el dni";
-            }
+            
+            }else{
+                $data = $this->model->modificarCliente($dni, $nombre, $telefono, $direccion, $id);
+                if ($data == "modificado") {
+                    $msg = "modificado";
+                }else {
+                    $msg = "Error al modificar el cliente";
+                }
             }
         } 
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
