@@ -1,4 +1,4 @@
-let tblUsuarios;
+let tblUsuarios, tblClientes;
 document.addEventListener("DOMContentLoaded", function(){
     tblUsuarios = $('#tblUsuarios').DataTable( {
         ajax: {
@@ -13,7 +13,23 @@ document.addEventListener("DOMContentLoaded", function(){
             {'data' : 'estado'},    
             {'data' : 'acciones'}    
         ]
-    } );
+    });
+    // fin de tabla usuarios
+    tblClientes = $('#tblClientes').DataTable( {
+        ajax: {
+            url: base_url + "Clientes/listar",
+            dataSrc: ''
+        },
+        columns: [
+            {'data' : 'id'},
+            {'data' : 'dni'},
+            {'data' : 'nombre'},
+            {'data' : 'telefono'},    
+            {'data' : 'direccion'},    
+            {'data' : 'estado'},    
+            {'data' : 'acciones'}    
+        ]
+    });
 })
 function frmLogin(e) {
     e.preventDefault();
@@ -250,7 +266,7 @@ function registrarCli(e) {
                       })
                       frm.reset();
                       $("#nuevo_cliente").modal("hide");
-                      //tblUsuarios.ajax.reload();
+                      tblClientes.ajax.reload();
                 }else if(res == "modificado"){
                     Swal.fire({
                         position: 'top-end',
@@ -260,7 +276,7 @@ function registrarCli(e) {
                         timer: 3000
                     })
                     $("#nuevo_cliente").modal("hide");
-                    //tblUsuarios.ajax.reload();
+                    tblClientes.ajax.reload();
                 } else{
                     Swal.fire({
                         position: 'top-end',
@@ -275,10 +291,10 @@ function registrarCli(e) {
     }
 
 }
-function btnEditarUser(id) {
-    document.getElementById("title").innerHTML = "Actualizar usuario";
+function btnEditarCli(id) {
+    document.getElementById("title").innerHTML = "Actualizar Cliente";
     document.getElementById("btnAccion").innerHTML = "Modificar";
-    const url = base_url + "Usuarios/editar/"+id;
+    const url = base_url + "Clientes/editar/"+id;
     const http = new XMLHttpRequest();
     http.open("GET", url, true);
     http.send();
@@ -286,19 +302,19 @@ function btnEditarUser(id) {
         if (this.readyState == 4 && this.status == 200){
             const res = JSON.parse(this.responseText);
             document.getElementById("id").value = res.id;
-            document.getElementById("usuario").value = res.usuario;
+            document.getElementById("dni").value = res.dni;
             document.getElementById("nombre").value = res.nombre;
-            document.getElementById("caja").value = res.id_caja;
-            document.getElementById("claves").classList.add("d-none");
-            $("#nuevo_usuario").modal("show"); 
+            document.getElementById("telefono").value = res.telefono;
+            document.getElementById("direccion").value = res.direccion;
+            $("#nuevo_cliente").modal("show"); 
         }
     }
     
 }
-function btnEliminarUser(id) {
+function btnEliminarCli(id) {
     Swal.fire({
         title: 'Esta seguro de elimira?',
-        text: "el usuario no se eliminara de forma permanete, solo cambiara el estadol a inactivo!",
+        text: "el cliente no se eliminara de forma permanete, solo cambiara el estadol a inactivo!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -307,7 +323,7 @@ function btnEliminarUser(id) {
         cancelButtonText: 'No'
       }).then((result) => {
         if (result.isConfirmed) {
-            const url = base_url + "Usuarios/eliminar/"+id;
+            const url = base_url + "Clientes/eliminar/"+id;
             const http = new XMLHttpRequest();
             http.open("GET", url, true);
             http.send();
@@ -317,10 +333,10 @@ function btnEliminarUser(id) {
                     if (res == "ok") {
                         Swal.fire(
                             'Mensaje!',
-                            'Usuario eliminado con exito',
+                            'Cliente eliminado con exito',
                             'success'
                         )
-                        tblUsuarios.ajax.reload();
+                        tblClientes.ajax.reload();
                     }else{
                         Swal.fire(
                             'Mensaje!',

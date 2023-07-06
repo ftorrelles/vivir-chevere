@@ -22,9 +22,9 @@ class Clientes extends Controller{
                 $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
             }
             $data[$i]['acciones'] = '<div>
-            <button class="btn btn-primary" type="button" onclick="btnEditarUser('.$data[$i]['id'].');"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="btnEliminarUser('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
-            <button class="btn btn-success" type="button" onclick="btnReingresarUser('.$data[$i]['id'].');">Reingresar</button>
+            <button class="btn btn-primary" type="button" onclick="btnEditarCli('.$data[$i]['id'].');"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-danger" type="button" onclick="btnEliminarCli('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-success" type="button" onclick="btnReingresarCli('.$data[$i]['id'].');"><i class="fas fa-pencil"></i></button>
             </div>'; 
         }
 
@@ -65,17 +65,17 @@ class Clientes extends Controller{
     }
     public function editar(int $id)
     {
-        $data = $this->model->editarUser($id);
+        $data = $this->model->editarCli($id);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
     public function eliminar(int $id)
     {
-        $data = $this->model->accionUser(0, $id);
+        $data = $this->model->accionCli(0, $id);
         if ($data == 1) {
             $msg = "ok";
         }else {
-            $msg = "Error al eliminar el dni";
+            $msg = "Error al eliminar el cliente";
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();

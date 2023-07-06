@@ -5,13 +5,13 @@ class ClientesModel extends Query{
     {
         parent::__construct();
     }
-    public function getUsuarios()
+    public function getClientes()
     {
-        $sql = "SELECT u.*, c.id as direccion, c.caja FROM usuarios u INNER JOIN caja c WHERE u.direccion = c.id";
+        $sql = "SELECT * FROM clientes";
         $data = $this->selectAll($sql);
         return $data;
     }
-public function registrarCliente14(string $dni, string $nombre, string $telefono, string $direccion)
+    public function registrarCliente(string $dni, string $nombre, string $telefono, string $direccion)
     {
         $this->dni = $dni;
         $this->nombre = $nombre;
@@ -51,17 +51,17 @@ public function registrarCliente14(string $dni, string $nombre, string $telefono
         }
         return $res;
     }
-    public function editarUser(int $id)
+    public function editarCli(int $id)
     {
-        $sql = "SELECT * FROM usuarios WHERE id = $id";
+        $sql = "SELECT * FROM clientes WHERE id = $id";
         $data = $this->select($sql);
         return $data;
     }
-    public function accionUser(int $estado, int $id)
+    public function accionClic(int $estado, int $id)
     {
         $this->id = $id;
         $this->estado = $estado;
-        $sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
+        $sql = "UPDATE clientes SET estado = ? WHERE id = ?";
         $datos = array($this->estado, $this->id);
         $data = $this->save($sql, $datos);
         return $data;
