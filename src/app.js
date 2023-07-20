@@ -6,6 +6,9 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
 
+const AppError = require('./utils/appError.js');
+const globalErrorHandler = require('./controllers/error.controller');
+
 const app = express();
 
 const limiter = rateLimit({
@@ -28,8 +31,12 @@ app.use('/api/v1', limiter);
 
 //rutas
 
-//TODO: excepciones de rutas no encontradas
+app.all('*', (req, res, next) => {
+  return next(
+    new AppError(`can't find ${req.originalUrl} on this server!`, 404)
+  );
+});
 
-//TODO: controlador de manejo de errores
+app.use(globalErrorHandler);
 
 module.exports = app;
