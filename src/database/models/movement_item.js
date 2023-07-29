@@ -1,24 +1,22 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Movement_item extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      User.belongsTo(models.Role, {
-        foreignKey: 'roleId',
+      Movement_item.belongsTo(models.Movement, {
+        foreignKey: 'movementId',
       });
-
-      User.belongsTo(models.Branch, {
-        foreignKey: 'userId',
+      Movement_item.belongsTo(models.Product, {
+        foreignKey: 'productId',
       });
     }
   }
-  User.init(
+  Movement_item.init(
     {
       id: {
         allowNull: false,
@@ -26,28 +24,23 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      roleId: {
+      movementId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.DECIMAL,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'Movement_item',
     }
   );
-  return User;
+  return Movement_item;
 };

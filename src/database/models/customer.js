@@ -9,8 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       //define association here
+
       Customer.belongsTo(models.TypeCustomer, {
         foreignKey: 'typecustomerId',
+        as: 'typeCustomer',
+      });
+      Customer.hasMany(models.Movement, {
+        foreignKey: 'customerId',
+      });
+      Customer.belongsTo(models.Role, {
+        foreignKey: 'roleId',
+      });
+      Customer.hasMany(models.Branch, {
+        foreignKey: 'customerId',
+      });
+      Customer.hasMany(models.EmailCode, {
+        foreignKey: 'customerId',
       });
     }
   }
@@ -51,10 +65,33 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      // password: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
+      roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ref: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
     },
     {
       sequelize,
