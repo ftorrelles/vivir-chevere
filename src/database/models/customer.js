@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       identificationDocument: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
@@ -55,11 +55,11 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       birthdate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
       },
       typecustomerId: {
         type: DataTypes.INTEGER,
@@ -85,7 +85,6 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       status: {
         type: DataTypes.BOOLEAN,

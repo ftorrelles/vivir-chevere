@@ -111,7 +111,7 @@ exports.update = catchAsync(async (req, res, next) => {
     status,
   } = req.body;
   const customer = await customerServices.findOne(id);
-  const customerUpdated = await customerServices.update(customer, {
+  const customerUpdated = await customerServices.update(id, {
     firstName,
     lastName,
     identificationDocument,
@@ -138,7 +138,7 @@ exports.delete = catchAsync(async (req, res, next) => {
 
   const customerDeleted = await customerServices.delete(id);
 
-  return res.status(204).json({
+  return res.status(200).json({
     status: 'Success',
     message: 'The customer has benn deleted!',
     customerDeleted,

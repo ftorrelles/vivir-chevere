@@ -4,8 +4,9 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.changeColumn('Customers', 'identificationDocument', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
+      unique: true,
     });
   },
 
