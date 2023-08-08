@@ -1,9 +1,10 @@
 <?php
-const base_url = "http://localhost/post_venta/";
+const base_url = "http://localhost/proyecto-chevere/post_venta/";
 const host = "localhost";
-const user = "root";
+const port = '5432';
+const user = "postgres";
 const pass = "";
-const db = "sistema";
+const db = "db_vivir_chevere";
 const charset = "charset-utf8";
 
 ?>

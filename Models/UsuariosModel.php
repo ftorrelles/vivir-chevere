@@ -8,6 +8,7 @@ class UsuariosModel extends Query{
     public function getUsuario(string $usuario, string $clave)
     {
         $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND clave = '$clave'";
+        // $sql = 'SELECT * FROM "Customers" WHERE "firstName" = \'' . $usuario . '\' AND clave = \'' . $clave . '\'';
         $data = $this->select($sql);
         return $data;
     }
@@ -17,12 +18,21 @@ class UsuariosModel extends Query{
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function getUsuarios()
+    // public function getUsuarios()
+    // {
+    //     $sql = "SELECT u.*, c.id as id_caja, c.caja FROM usuarios u INNER JOIN caja c WHERE u.id_caja = c.id";
+    //     $data = $this->selectAll($sql);
+    //     return $data;
+    // }
+        public function getUsuarios()
     {
-        $sql = "SELECT u.*, c.id as id_caja, c.caja FROM usuarios u INNER JOIN caja c WHERE u.id_caja = c.id";
+        $sql = "SELECT u.*, c.id as id_caja, c.caja FROM usuarios u INNER JOIN caja c ON u.id_caja = c.id";
         $data = $this->selectAll($sql);
         return $data;
     }
+
+
+
     public function registrarUsuario(string $usuario, string $nombre, string $clave, int $id_caja)
     {
         $this->usuario = $usuario;
