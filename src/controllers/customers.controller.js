@@ -63,9 +63,14 @@ exports.create = catchAsync(async (req, res, next) => {
     subject: 'Codigo de verificacion web vivir chevere',
     html: `
       <h1>holaa ${firstName}!!</h1>
+      <p>Te saludamos tus socios de Vivir Chevere</p>
       <p>Ya casi terminamos</p>
-      <p>Ve al siguiente enlace para verificar tu correo electrónico</p>
+      <p>Ve al siguiente enlace para verificar tu correo electrónico y asi puedas ingresar a tu oficina virtual</p>
       <a href="${link}">${link}</a>
+      <br/>
+      <h3>tus credenciales de ingreso son las siguientes</h3>
+      <p>Usuario: ${email}</p>
+      <p>Contraseña: ${username}</p>
     `,
   });
 
@@ -109,6 +114,7 @@ exports.update = catchAsync(async (req, res, next) => {
     ref,
     username,
     status,
+    isVerified,
   } = req.body;
   const customer = await customerServices.findOne(id);
   const customerUpdated = await customerServices.update(id, {
@@ -124,6 +130,7 @@ exports.update = catchAsync(async (req, res, next) => {
     ref,
     username,
     status,
+    isVerified,
   });
   return res.status(200).json({
     status: 'Success',
@@ -156,7 +163,11 @@ exports.verifyEmail = catchAsync(async (req, res) => {
   await customerServices.update(emailCode.customerId, { isVerified: true });
   await emailCode.destroy();
 
-  return res.json(emailCode);
+  // return res.json(emailCode);
+  return res.status(200).json({
+    status: 'Success',
+    message: 'The customer has benn verified!',
+  });
 });
 
 ///////////////////////

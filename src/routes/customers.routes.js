@@ -24,6 +24,6 @@ customerRouter
   .route('/:id')
   .get(verifyJWT, customersController.findOne)
   .delete(verifyJWT, customersController.delete)
-  .patch(verifyJWT, customersController.update);
+  .patch(customersController.update);
 
 module.exports = customerRouter;
