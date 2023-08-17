@@ -33,6 +33,10 @@ class CustomersServices {
         id: customerId,
         status: true,
       },
+      include: [
+        { model: db.TypeCustomer, as: 'typeCustomer' },
+        { model: db.Role },
+      ],
     });
     if (!customer)
       throw new AppError(`Author with id ${customerId} not found`, 404);
@@ -40,7 +44,13 @@ class CustomersServices {
   }
 
   async findByEmail(email) {
-    return await db.Customer.findOne({ where: { email } });
+    return await db.Customer.findOne({
+      where: { email },
+      include: [
+        { model: db.TypeCustomer, as: 'typeCustomer' },
+        { model: db.Role },
+      ],
+    });
   }
 
   async update(customerId, dateCustomer) {

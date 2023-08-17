@@ -105,32 +105,32 @@ exports.update = catchAsync(async (req, res, next) => {
     firstName,
     lastName,
     identificationDocument,
-    email,
+    // email,
     phone,
     birthdate,
-    typecustomerId,
+    // typecustomerId,
     roleId,
-    password,
-    ref,
-    username,
-    status,
-    isVerified,
+    // password,
+    // ref,
+    // username,
+    // status,
+    // isVerified,
   } = req.body;
   const customer = await customerServices.findOne(id);
   const customerUpdated = await customerServices.update(id, {
     firstName,
     lastName,
     identificationDocument,
-    email,
+    // email,
     phone,
     birthdate,
-    typecustomerId,
+    // typecustomerId,
     roleId,
-    password,
-    ref,
-    username,
-    status,
-    isVerified,
+    // password,
+    // ref,
+    // username,
+    // status,
+    // isVerified,
   });
   return res.status(200).json({
     status: 'Success',
@@ -198,19 +198,39 @@ exports.login = catchAsync(async (req, res) => {
 });
 //////////////////////////
 
+// // El controlador getLoggedUser
+// exports.getLoggedUser = catchAsync(async (req, res) => {
+//   // El middleware de autenticación verifyJWT agrega el usuario decodificado en req.user
+//   const loggedUser = req.user;
+
+//   // Verificar si el usuario autenticado existe
+//   if (!loggedUser) {
+//     return res.status(401).json({ message: 'User not authenticated' });
+//   }
+
+//   // Realizar cualquier otra lógica adicional que desees hacer con el usuario autenticado
+//   // ...
+
+//   // Devolver el usuario autenticado en la respuesta
+//   return res.json(loggedUser);
+// });
 // El controlador getLoggedUser
 exports.getLoggedUser = catchAsync(async (req, res) => {
   // El middleware de autenticación verifyJWT agrega el usuario decodificado en req.user
   const loggedUser = req.user;
-
   // Verificar si el usuario autenticado existe
   if (!loggedUser) {
     return res.status(401).json({ message: 'User not authenticated' });
   }
+  // Obtener el cliente y su información adicional, como el rol
+  const customerWithRole = await customerServices.findOne(
+    loggedUser.customerId
+  );
 
-  // Realizar cualquier otra lógica adicional que desees hacer con el usuario autenticado
-  // ...
-
-  // Devolver el usuario autenticado en la respuesta
-  return res.json(loggedUser);
+  // Verificar si el cliente existe
+  if (!customerWithRole) {
+    return res.status(401).json({ message: 'Customer not found' });
+  }
+  // Devolver el cliente autenticado con su información, incluido el rol
+  return res.json(customerWithRole);
 });
