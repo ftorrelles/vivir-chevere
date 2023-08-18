@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       Movement.belongsTo(models.Branch, {
         foreignKey: 'branchId',
       });
+      Movement.belongsTo(models.Customer, {
+        foreignKey: 'dispatcherId',
+      });
     }
   }
   Movement.init(
@@ -46,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       branchId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      dispatcherId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

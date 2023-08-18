@@ -26,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       Customer.hasMany(models.EmailCode, {
         foreignKey: 'customerId',
       });
+      Customer.hasMany(models.Movement, {
+        foreignKey: 'dispatcherId',
+      });
     }
   }
   Customer.init(
