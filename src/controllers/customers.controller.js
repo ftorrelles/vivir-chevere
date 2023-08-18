@@ -116,7 +116,7 @@ exports.update = catchAsync(async (req, res, next) => {
     // status,
     // isVerified,
   } = req.body;
-  const customer = await customerServices.findOne(id);
+  // const customer = await customerServices.findOne(id);
   const customerUpdated = await customerServices.update(id, {
     firstName,
     lastName,
@@ -139,6 +139,52 @@ exports.update = catchAsync(async (req, res, next) => {
   });
 });
 //////////////////////
+exports.credentialUpdate = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const pass1 = password;
+  const encriptedPassword = await bcrypt.hash(password, 10);
+
+  const customerUpdated = await customerServices.updateByEmail(email, {
+    password: encriptedPassword,
+  });
+
+  const code = require('crypto').randomBytes(32).toString('hex');
+  const link = `${frontBaseUrl}/reset_password/${code}`;
+
+  // const customerData = await db.Customer.findOne({
+  //   where: { email: email },
+  // });
+
+  await sendEmail({
+    to: email,
+    subject: 'Recuperación de contraseña - Vivir Chevere',
+    html: `
+      <h1>Hola !!</h1>
+      <p>Te saludamos desde Vivir Chevere</p>
+      <p>Para completar el proceso de cambio de contraseña, sigue este enlace:</p>
+      <a href="${link}">${link}</a>
+      <br/>
+      <h3>Tus nuevas credenciales de ingreso son las siguientes:</h3>
+      <p>Usuario: ${email}</p>
+      <p>Contraseña: ${pass1}</p>
+    `,
+  });
+
+  // Guardar el código en tu base de datos usando el modelo PasswordResetCode
+  await db.PasswordResetCode.create({
+    code,
+    email,
+  });
+
+  return res.status(200).json({
+    status: 'Success',
+    message: 'Las credenciales han sido actualizadas.',
+    customerUpdated,
+  });
+});
+
+/////////////
 
 exports.delete = catchAsync(async (req, res, next) => {
   const { id } = req.params;
@@ -185,6 +231,9 @@ exports.login = catchAsync(async (req, res) => {
   const isValid = await bcrypt.compare(password, customer.password);
   if (!isValid) return res.status(401).json({ message: 'invalid credentials' });
 
+  if (customer.Role.name_role === 'Sin rol') {
+    return res.status(403).json({ message: 'not authorized' });
+  }
   // Generar el token utilizando jsonwebtoken
   const token = jwt.sign(
     { customerId: customer.id },
@@ -198,22 +247,6 @@ exports.login = catchAsync(async (req, res) => {
 });
 //////////////////////////
 
-// // El controlador getLoggedUser
-// exports.getLoggedUser = catchAsync(async (req, res) => {
-//   // El middleware de autenticación verifyJWT agrega el usuario decodificado en req.user
-//   const loggedUser = req.user;
-
-//   // Verificar si el usuario autenticado existe
-//   if (!loggedUser) {
-//     return res.status(401).json({ message: 'User not authenticated' });
-//   }
-
-//   // Realizar cualquier otra lógica adicional que desees hacer con el usuario autenticado
-//   // ...
-
-//   // Devolver el usuario autenticado en la respuesta
-//   return res.json(loggedUser);
-// });
 // El controlador getLoggedUser
 exports.getLoggedUser = catchAsync(async (req, res) => {
   // El middleware de autenticación verifyJWT agrega el usuario decodificado en req.user

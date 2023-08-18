@@ -35,7 +35,7 @@ class CustomersServices {
       },
       include: [
         { model: db.TypeCustomer, as: 'typeCustomer' },
-        { model: db.Role },
+        { model: db.Role, as: 'Role' }, // Asegúrate de que el nombre del modelo y el alias coincidan con tu definición de modelo
       ],
     });
     if (!customer)
@@ -61,6 +61,17 @@ class CustomersServices {
       throw new AppError(`Customer with id ${customerId} not found`, 404);
 
     return await customer.update(dateCustomer);
+  }
+
+  async updateByEmail(email, dataToUpdate) {
+    const customer = await db.Customer.findOne({
+      where: { email: email },
+    });
+    if (!customer) {
+      throw new AppError(`Customer with email ${email} not found`, 404);
+    }
+
+    return await customer.update(dataToUpdate);
   }
 
   async delete(customerId) {
