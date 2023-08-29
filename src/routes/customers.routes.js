@@ -18,6 +18,14 @@ customerRouter.route('/verify/:code').get(customersController.verifyEmail);
 
 customerRouter.route('/login').post(customersController.login);
 
+customerRouter
+  .route('/sendrecoveryemail')
+  .post(customersController.sendPasswordRecoveryEmail);
+
+customerRouter
+  .route('/reset-password/:code')
+  .patch(customersController.resetPassword);
+
 customerRouter.route('/me').get(verifyJWT, customersController.getLoggedUser);
 
 customerRouter

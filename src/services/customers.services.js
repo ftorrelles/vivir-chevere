@@ -63,15 +63,13 @@ class CustomersServices {
     return await customer.update(dateCustomer);
   }
 
-  async updateByEmail(email, dataToUpdate) {
-    const customer = await db.Customer.findOne({
-      where: { email: email },
-    });
+  async updatePasswordByEmail(email, newPassword) {
+    const customer = await this.findByEmail(email);
     if (!customer) {
       throw new AppError(`Customer with email ${email} not found`, 404);
     }
 
-    return await customer.update(dataToUpdate);
+    return await customer.update({ password: newPassword });
   }
 
   async delete(customerId) {

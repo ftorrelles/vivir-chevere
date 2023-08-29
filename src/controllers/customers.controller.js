@@ -7,6 +7,7 @@ const CustomersServices = require('../services/customers.services');
 const customerServices = new CustomersServices();
 // const EmailCode = require('../database/models/emailcode.js');
 const db = require('../database/models');
+const { log } = require('console');
 ////////////////////////////
 exports.findAll = catchAsync(async (req, res, next) => {
   const { firstName, lastName, identificationDocument } = req.query;
@@ -56,7 +57,7 @@ exports.create = catchAsync(async (req, res, next) => {
     status,
   });
   const code = require('crypto').randomBytes(32).toString('hex');
-  const link = `${frontBaseUrl}/verify_email/${code}`;
+  const linkVerify = `${frontBaseUrl}/verify_email/${code}`;
 
   await sendEmail({
     to: email,
@@ -66,7 +67,7 @@ exports.create = catchAsync(async (req, res, next) => {
       <p>Te saludamos tus socios de Vivir Chevere</p>
       <p>Ya casi terminamos</p>
       <p>Ve al siguiente enlace para verificar tu correo electrónico y asi puedas ingresar a tu oficina virtual</p>
-      <a href="${link}">${link}</a>
+      <a href="${linkVerify}">hacer click aqui</a>
       <br/>
       <h3>tus credenciales de ingreso son las siguientes</h3>
       <p>Usuario: ${email}</p>
@@ -139,35 +140,28 @@ exports.update = catchAsync(async (req, res, next) => {
   });
 });
 //////////////////////
-exports.credentialUpdate = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
 
-  const pass1 = password;
-  const encriptedPassword = await bcrypt.hash(password, 10);
+exports.sendPasswordRecoveryEmail = catchAsync(async (req, res) => {
+  const { email, frontBaseUrl } = req.body;
 
-  const customerUpdated = await customerServices.updateByEmail(email, {
-    password: encriptedPassword,
-  });
+  const customer = await customerServices.findByEmail(email);
+  if (!customer) {
+    return res.status(404).json({ message: 'Customer not found' });
+  }
 
   const code = require('crypto').randomBytes(32).toString('hex');
-  const link = `${frontBaseUrl}/reset_password/${code}`;
-
-  // const customerData = await db.Customer.findOne({
-  //   where: { email: email },
-  // });
-
+  const link = `${frontBaseUrl}/reset_password/${code}?email=${encodeURIComponent(
+    email
+  )}`;
   await sendEmail({
     to: email,
     subject: 'Recuperación de contraseña - Vivir Chevere',
     html: `
-      <h1>Hola !!</h1>
+      <h1>Hola ${customer.firstName}!!</h1>
       <p>Te saludamos desde Vivir Chevere</p>
       <p>Para completar el proceso de cambio de contraseña, sigue este enlace:</p>
-      <a href="${link}">${link}</a>
+      <a href="${link}">hacer click aqui</a>
       <br/>
-      <h3>Tus nuevas credenciales de ingreso son las siguientes:</h3>
-      <p>Usuario: ${email}</p>
-      <p>Contraseña: ${pass1}</p>
     `,
   });
 
@@ -179,8 +173,33 @@ exports.credentialUpdate = catchAsync(async (req, res, next) => {
 
   return res.status(200).json({
     status: 'Success',
-    message: 'Las credenciales han sido actualizadas.',
-    customerUpdated,
+    message: 'Correo de recuperación enviado.',
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res) => {
+  const { email, newPassword } = req.body;
+  const code = req.params.code;
+
+  // Verificar si el código de validación es correcto
+  const validCode = await db.PasswordResetCode.findOne({
+    where: { email, code },
+  });
+
+  if (!validCode) {
+    return res.status(401).json({ message: 'Invalid validation code' });
+  }
+
+  // Actualizar la contraseña del cliente
+  const encriptedPassword = await bcrypt.hash(newPassword, 10);
+  await customerServices.updatePasswordByEmail(email, encriptedPassword);
+
+  // Eliminar el código de validación usado
+  await validCode.destroy();
+
+  return res.status(200).json({
+    status: 'Success',
+    message: 'Contraseña actualizada exitosamente.',
   });
 });
 

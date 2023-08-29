@@ -21,7 +21,7 @@ const sendEmail = (options) =>
       console.log(error, info);
       if (error) {
         console.log(error);
-        return reject({ message: 'An error has occured' });
+        return reject({ message: 'An error has occured in nodemailer' });
       }
       return resolve({ message: 'Email sent successfully' });
     });
