@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/error.controller');
 const roleRouter = require('./routes/roles.routes.js');
 const typeCustomerRouter = require('./routes/typeCustomers.routes.js');
 const customerRouter = require('./routes/customers.routes.js');
+const typeMovementRouter = require('./routes/typeMovements.routes.js');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api/v1', limiter);
 app.use('/api/v1/roles', roleRouter);
 app.use('/api/v1/typeCustomers', typeCustomerRouter);
 app.use('/api/v1/customers', customerRouter);
+app.use('/api/v1/typeMovements', typeMovementRouter);
 
 app.all('*', (req, res, next) => {
   return next(

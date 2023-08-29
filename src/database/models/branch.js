@@ -11,9 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       Branch.hasMany(models.Warehouse, {
         foreignKey: 'branchId',
       });
-      Branch.belongsTo(models.User, {
-        foreignKey: 'userId',
-      });
       Branch.hasMany(models.Movement, {
         foreignKey: 'branchId',
       });
@@ -40,10 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       neighborhood: {
         type: DataTypes.STRING,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
       },
       customerId: {
         type: DataTypes.INTEGER,
