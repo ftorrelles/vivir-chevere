@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL,
         allowNull: false,
       },
+      total_line: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        defaultValue: 0,
+      },
     },
     {
       sequelize,
