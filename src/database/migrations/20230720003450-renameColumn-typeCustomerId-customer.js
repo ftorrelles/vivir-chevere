@@ -4,10 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.renameColumn;
-    // 'Customers',
-    // 'typeCustomerId',
-    // 'typecustomerId' ///asi es el original, lo cambie por conflictos para ejecutar nuevas migraciones
-    'Customers', 'typecustomerId', 'typecustomerId';
+    'Customers', 'typeCustomerId', 'typecustomerId'; ///asi es el original, lo cambie por conflictos para ejecutar nuevas migraciones
   },
 
   async down(queryInterface, Sequelize) {

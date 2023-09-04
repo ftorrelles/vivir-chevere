@@ -3,10 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // queryInterface.addColumn('Customers', 'password', {
-    //   type: Sequelize.STRING,
-    //   allowNull: false,
-    // }); //fue agregada provisional ya que en migraciones pasadas se elimino
     // await Promise.all([
     //   queryInterface.addColumn('Customers', 'ref', {
     //     type: Sequelize.INTEGER,
@@ -22,10 +18,6 @@ module.exports = {
     //     allowNull: false,
     //     unique: true,
     //   }),
-    //   queryInterface.addColumn('Customers', 'password', {
-    //     type: Sequelize.STRING,
-    //     allowNull: false,
-    //   }),
     // ]);
   },
 
@@ -35,7 +27,6 @@ module.exports = {
     //   queryInterface.removeColumn('Customers', 'ref'),
     //   queryInterface.removeColumn('Customers', 'isVerified'),
     //   queryInterface.removeColumn('Customers', 'username'),
-    //   queryInterface.removeColumn('Customers', 'password'),
     // ]);
   },
 };

@@ -37,12 +37,6 @@ module.exports = {
       typeCustomerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //   model: 'TypeCustomer',
-        //   key: 'id',
-        // },
-        // onDelete: 'SET NULL',
-        // onUpdate: 'CASCADE',
       },
       password: {
         type: Sequelize.STRING,
