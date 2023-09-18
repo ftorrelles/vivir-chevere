@@ -1,12 +1,12 @@
 <?php
 class Controller{
+    protected $views, $model;
     public function __construct()
     {
         $this->views = new Views();
         $this->cargarModel();
 
-    }
-        
+    }  
     public function cargarModel()
     {
         $model = get_class($this)."Model";

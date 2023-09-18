@@ -1,9 +1,15 @@
 <?php
 class UsuariosModel extends Query{
-    private $usuario, $nombre, $clave, $id_caja, $id, $estado;
+    private $usuario, $nombre, $clave, $id_caja, $id, $estado, $typecustomerid;
     public function __construct()
     {
         parent::__construct();
+    }
+    public function getVerificar($correo)
+    {
+        $sql = 'SELECT * FROM "Customers" WHERE email = \'' . $correo . '\'';
+        // $sql = "SELECT * FROM clientes WHERE correo = '$correo'";
+        return $this->select($sql);
     }
     public function getUsuario(string $usuario, string $clave)
     {
@@ -24,12 +30,58 @@ class UsuariosModel extends Query{
     //     $data = $this->selectAll($sql);
     //     return $data;
     // }
-        public function getUsuarios()
+    public function getUsuarios($id, $typecustomerid)
     {
-        $sql = "SELECT u.*, c.id as id_caja, c.caja FROM usuarios u INNER JOIN caja c ON u.id_caja = c.id";
+        $sql = 'SELECT * FROM "Customers" WHERE ref = \'' . $id . '\'AND "typecustomerId" = \'' . $typecustomerid . '\' order BY id';
         $data = $this->selectAll($sql);
         return $data;
+        
     }
+    public function getActivo($id)
+    {
+        $sql = 'SELECT "isVerified" FROM "Customers" WHERE id = \'' . $id . '\'';
+        $data = $this->select($sql);
+        // return $data;
+        if (!empty($data)) {
+            return $data[0]['isVerified'];
+        } else {
+            // return $data[0]['isVerified'];
+            return false; // O algún valor por defecto si no hay resultados
+        }
+        
+    }
+    public function getCompras($id)
+    {
+        $sql = 'SELECT * FROM "Movements" WHERE "customerId" = \'' . $id . '\'';
+        $data = $this->selectAll($sql);
+        return $data;
+        
+    }
+    // public function getDetalles($idFactura)
+    // {   $sql = 'SELECT MI.*, P.name AS nombre_producto FROM "Movement_items" AS MI JOIN "Productos" AS P ON MI."productId" = P.id
+    //     WHERE MI."movementId" = \'' . $idFactura . '\'';
+    //     // $sql = 'SELECT * FROM "Movement_items" WHERE "movementId" = \'' . $idFactura . '\'';
+    //     $data = $this->selectAll($sql);
+    //     return $data;
+        
+    // }
+
+    public function getDetalles($idFactura)
+{
+    $sql = 'SELECT MI.*, P.name AS nombre_producto, P.price_afiliate AS precio
+            FROM "Movement_items" AS MI
+            JOIN "Products" AS P ON MI."productId" = P.id
+            WHERE MI."movementId" = \'' . $idFactura . '\'';
+    
+    try {
+        $data = $this->selectAll($sql);
+        return $data;
+    } catch (PDOException $e) {
+        // Manejo de error
+        echo "Error en la consulta: " . $e->getMessage();
+        return null;
+    }
+}
 
 
 
