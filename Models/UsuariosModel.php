@@ -1,6 +1,6 @@
 <?php
 class UsuariosModel extends Query{
-    private $usuario, $nombre, $clave, $id_caja, $id, $estado, $typecustomerid;
+    private $usuario, $nombre, $clave, $id_caja, $id, $estado, $typecustomerid, $idCliente;
     public function __construct()
     {
         parent::__construct();
@@ -52,7 +52,7 @@ class UsuariosModel extends Query{
     }
     public function getCompras($id)
     {
-        $sql = 'SELECT * FROM "Movements" WHERE "customerId" = \'' . $id . '\'';
+        $sql = 'SELECT * FROM "Movements" WHERE "customerId" = \'' . $id . '\' ORDER BY "createdAt" DESC';
         $data = $this->selectAll($sql);
         return $data;
         
@@ -67,21 +67,65 @@ class UsuariosModel extends Query{
     // }
 
     public function getDetalles($idFactura)
-{
-    $sql = 'SELECT MI.*, P.name AS nombre_producto, P.price_afiliate AS precio
-            FROM "Movement_items" AS MI
-            JOIN "Products" AS P ON MI."productId" = P.id
-            WHERE MI."movementId" = \'' . $idFactura . '\'';
-    
-    try {
-        $data = $this->selectAll($sql);
-        return $data;
-    } catch (PDOException $e) {
-        // Manejo de error
-        echo "Error en la consulta: " . $e->getMessage();
-        return null;
+    {
+        $sql = 'SELECT MI.*, P.name AS nombre_producto, P.price_afiliate AS precio
+                FROM "Movement_items" AS MI
+                JOIN "Products" AS P ON MI."productId" = P.id
+                WHERE MI."movementId" = \'' . $idFactura . '\'';
+        
+        try {
+            $data = $this->selectAll($sql);
+            return $data;
+        } catch (PDOException $e) {
+            // Manejo de error
+            echo "Error en la consulta: " . $e->getMessage();
+            return null;
+        }
     }
-}
+
+    // public function getComprasmes($idCliente, $mes, $anio)
+    // {
+    //     Realiza la consulta para obtener las compras del cliente en el mes y año dados
+    //     $sql = 'SELECT SUM(total) AS total_compras FROM "Movements" WHERE "customerId" = :idCliente AND EXTRACT(MONTH FROM "createdAt") = :mes AND EXTRACT(YEAR FROM "createdAt") = :anio';
+    //     $params = array(
+    //         'idCliente' => $idCliente,
+    //         'mes' => $mes,
+    //         'anio' => $anio
+    //     );
+        
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->execute($params);
+    //     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //     return $resultado['total_compras'];
+    // }
+    public function getComprasmes22($idCliente, $mes, $anio)
+    {
+        // Realiza la consulta para obtener las compras del cliente en el mes y año dados
+        $sql = 'SELECT SUM(total) AS total_compras FROM "Movements" WHERE "customerId" = \'' . $idCliente . '\' AND EXTRACT(MONTH FROM "createdAt") = \'' . $mes . '\' AND EXTRACT(YEAR FROM "createdAt") = \'' . $anio . '\'';
+        
+        try {
+            $data = $this->select($sql);
+            return $data;
+        } catch (PDOException $e) {
+            // Manejo de error
+            echo "Error en la consulta: " . $e->getMessage();
+            return null;
+        }
+    }
+    public function getComprasmes($idCliente, $mes, $anio)
+    {
+        $sql = 'SELECT SUM(total) AS totalc FROM "Movements" WHERE "customerId" = \'' . $idCliente . '\' AND EXTRACT(MONTH FROM "createdAt") = \'' . $mes . '\' AND EXTRACT(YEAR FROM "createdAt") = \'' . $anio . '\'';
+        
+        try {
+            $data = $this->selectAll($sql);
+            return $data;
+        } catch (PDOException $e) {
+            // Manejo de error
+            echo "Error en la consulta: " . $e->getMessage();
+            return null;
+        }
+    }
 
 
 

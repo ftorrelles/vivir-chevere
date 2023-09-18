@@ -1,4 +1,6 @@
-<?php include "Views/Templates/header.php"; ?>
+<?php require_once "Views/Templates/header.php"; ?>
+
+
 <h1 class="mt-4">Oficina Virtual</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Mi Oficina</li>
@@ -7,7 +9,12 @@
 <div class="row">
     <div class="col-xl-3 col-md-6">
         <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Compras</div>
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Compras del mes</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="Saldo">0</strong> $
+                </span>
+            </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
                 <a id="detalleCompras"class="small text-white stretched-link" href="#">Detalles de compras</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -15,26 +22,85 @@
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card bg-warning text-white mb-4">
-            <div class="card-body">Warning Card</div>
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Compras del mes</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="Saldo">0</strong> $
+                </span>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a id="detalleCompras"class="small text-white stretched-link" href="#">Detalles de compras</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Compras del mes</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="Saldo">0</strong> $
+                </span>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a id="detalleCompras"class="small text-white stretched-link" href="#">Detalles de compras</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Compras del mes</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="Saldo">0</strong> $
+                </span>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a id="detalleCompras"class="small text-white stretched-link" href="#">Detalles de compras</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-md-6">
+        <div class="card bg-success shadow text-white mb-4">
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Referidos</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="nref">0</strong> <i class="fas fa-users"></i>
+                </span>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a id="enlaceCargarTabla" class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card bg-success shadow text-white mb-4">
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Referidos</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="nref">0</strong> <i class="fas fa-users"></i>
+                </span>
+            </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
                 <a class="small text-white stretched-link" href="#">View Details</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="card bg-success text-white mb-4">
-            <div class="card-body">Success Card</div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card bg-success shadow text-white mb-4">
+            <div class="card-body" style="overflow: hidden;">
+                <span style="float: left;">Referidos</span>
+                <span style="float: right; text-align: right;">
+                    <strong id="nref">0</strong> <i class="fas fa-users"></i>
+                </span>
             </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="card bg-danger text-white mb-4">
-            <div class="card-body">Danger Card</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
                 <a class="small text-white stretched-link" href="#">View Details</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -42,7 +108,6 @@
         </div>
     </div>
 </div>
-
 <!-- Contenedor para mostrar la tabla -->
 
     <div class="card mb-4">
@@ -245,6 +310,7 @@
                             <th>Nombre del producto</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
+                            <th>Total</th>
                             <!-- Agrega más encabezados aquí según tus necesidades -->
                         </tr>
                     </thead>

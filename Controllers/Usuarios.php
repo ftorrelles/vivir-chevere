@@ -97,51 +97,107 @@ class Usuarios extends Controller{
 
     // Usuarios.php
 
-public function detalleFactura() {
-    $idFactura = $_GET['id'];
-    $detalles = $this->model->getDetalles($idFactura);
+    public function detalleFactura() {
+        $idFactura = $_GET['id'];
+        $detalles = $this->model->getDetalles($idFactura);
 
-    // Crea una representación HTML de los detalles de la factura
-    $htmlDetalles = '<p>Detalles de la factura:</p>';
+        // Crea una representación HTML de los detalles de la factura
+        $htmlDetalles = '<p>Detalles de la factura:</p>';
 
-    // Agrega los detalles obtenidos de la base de datos al HTML
-    foreach ($detalles as $detalle) {
-        $htmlDetalles .= '<p>Producto: ' . $detalle['producto'] . '</p>';
-        $htmlDetalles .= '<p>Cantidad: ' . $detalle['cantidad'] . '</p>';
-        $htmlDetalles .= '<p>Precio: ' . $detalle['precio'] . '</p>';
-        // Agrega más campos si es necesario
+        // Agrega los detalles obtenidos de la base de datos al HTML
+        foreach ($detalles as $detalle) {
+            $htmlDetalles .= '<p>Producto: ' . $detalle['producto'] . '</p>';
+            $htmlDetalles .= '<p>Cantidad: ' . $detalle['cantidad'] . '</p>';
+            $htmlDetalles .= '<p>Precio: ' . $detalle['precio'] . '</p>';
+            // Agrega más campos si es necesario
+        }
+
+        // Retorna los detalles en formato HTML
+        echo $htmlDetalles;
     }
 
-    // Retorna los detalles en formato HTML
-    echo $htmlDetalles;
-}
+    public function obtenerDetalle() {
+        $idFactura = $_GET['id'];
+        $detalles = $this->model->getDetalles($idFactura);
 
-public function obtenerDetalle() {
-    $idFactura = $_GET['id'];
-    $detalles = $this->model->getDetalles($idFactura);
+        // Crea una representación HTML de los detalles de la factura
+        $htmlDetalles = '<p>Detalles de la factura:</p>';
 
-    // Crea una representación HTML de los detalles de la factura
-    $htmlDetalles = '<p>Detalles de la factura:</p>';
+        // Agrega los detalles obtenidos de la base de datos al HTML
+        foreach ($detalles as $detalle) {
+            $htmlDetalles .= '<p>Producto: ' . $detalle['producto'] . '</p>';
+            $htmlDetalles .= '<p>Cantidad: ' . $detalle['cantidad'] . '</p>';
+            $htmlDetalles .= '<p>Precio: ' . $detalle['precio'] . '</p>';
+            // Agrega más campos si es necesario
+        }
 
-    // Agrega los detalles obtenidos de la base de datos al HTML
-    foreach ($detalles as $detalle) {
-        $htmlDetalles .= '<p>Producto: ' . $detalle['producto'] . '</p>';
-        $htmlDetalles .= '<p>Cantidad: ' . $detalle['cantidad'] . '</p>';
-        $htmlDetalles .= '<p>Precio: ' . $detalle['precio'] . '</p>';
-        // Agrega más campos si es necesario
+        // Retorna los detalles en formato HTML
+        echo $htmlDetalles;
     }
-
-    // Retorna los detalles en formato HTML
-    echo $htmlDetalles;
-}
-public function obtenerDetalleFactura($id)
+    public function obtenerDetalleFactura($id)
     {
         $idFactura = $id;
         $detallesFactura = $this->model->getDetalles($idFactura);
         echo json_encode($detallesFactura, JSON_UNESCAPED_UNICODE);
         die();
     }
+    // public function totalcomprasmes()
+    // {
+    //     $mes = $_GET['mes'];
+    //     $anio = $_GET['anio'];
+    //     $idCliente = $_SESSION['idCliente'];
+    //     $totalCompras = $this->model->getComprasmes($idCliente, $mes, $anio);
+    //     if ($totalCompras !== null) {
+    //         echo json_encode($totalCompras, JSON_UNESCAPED_UNICODE);
+    //     } else {
+    //         echo json_encode("Error en la consulta");
+    //     }
+        
 
+
+
+    //     // $totalcompras = $this->model->getComprasmes($idCliente, $mes, $anio);
+    //     // // $concatenado = $mes . '-' . $anio . '-' . $idCliente;
+    //     // echo json_encode($totalcompras, JSON_UNESCAPED_UNICODE);
+    //     // // echo json_encode($concatenado, JSON_UNESCAPED_UNICODE);
+    //     die();
+    // }
+
+    public function totalcomprasmes2()
+    {
+        $mes = $_GET['mes'];
+        $anio = $_GET['anio'];
+        $idCliente = $_SESSION['idCliente'];
+        $totalCompras = $this->model->getComprasmes($idCliente, $mes, $anio);
+        
+        header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
+        
+        if ($totalCompras !== null) {
+            echo json_encode($totalCompras, JSON_UNESCAPED_UNICODE);
+        } else {
+            echo json_encode("Error en la consulta");
+        }
+    
+        die();
+    }
+    public function totalcomprasmes()
+    {
+        $mes = $_GET['mes'];
+        $anio = $_GET['anio'];
+        $idCliente = $_SESSION['idCliente'];
+        $totalCompras = $this->model->getComprasmes($idCliente, $mes, $anio);
+        
+        header('Content-Type: application/json'); // Establecer el tipo de contenido como JSON
+        
+        if ($totalCompras !== null) {
+            echo json_encode($totalCompras, JSON_UNESCAPED_UNICODE);
+        } else {
+            echo json_encode("Error en la consulta");
+        }
+    
+        die();
+    }
+    
 }
 
 

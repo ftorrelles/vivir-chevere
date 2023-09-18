@@ -211,12 +211,16 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
+
+  $(document).ready(function () {
+    obtenerSaldoCalculado();
+  });
 });
 
 function mostrardetalle(id) {
   // Hacer una solicitud AJAX para obtener los detalles de la factura
   $.ajax({
-    url: 'Usuarios/obtenerDetalleFactura/' + id, // Ruta en Usuarios.php
+    url: base_url + 'Usuarios/obtenerDetalleFactura/' + id, // Ruta en Usuarios.php
     type: 'GET',
     dataType: 'json',
     success: function (detallesFactura) {
@@ -227,7 +231,14 @@ function mostrardetalle(id) {
       var tablaDetalles = document.getElementById('tablaDetalles');
       tablaDetalles.innerHTML = ''; // Limpiar contenido anterior
 
+      var totalFactura = 0;
+
       detallesFactura.forEach((detalle, index) => {
+        // Formatear el precio como número con dos decimales
+        var precioFormateado = parseFloat(detalle.precio).toFixed(2);
+
+        var totalLinea = detalle.quantity * parseFloat(detalle.precio);
+        totalFactura += totalLinea;
         var fila =
           '<tr>' +
           '<td>' +
@@ -245,11 +256,23 @@ function mostrardetalle(id) {
           '<td>' +
           detalle.precio +
           '</td>' +
+          '<td>' +
+          detalle.total_line +
+          '</td>' +
           // Agrega más celdas aquí según tus necesidades
           '</tr>';
         tablaDetalles.innerHTML += fila;
       });
 
+      // Agregar fila para mostrar el total de la factura
+      var filaTotal =
+        '<tr>' +
+        '<td colspan="5"></td>' +
+        '<td><strong>Total: ' +
+        totalFactura.toFixed(2) +
+        '</strong></td>' +
+        '</tr>';
+      tablaDetalles.innerHTML += filaTotal;
       // Abrir el modal
       $('#detalleModal').modal('show');
     },
@@ -258,4 +281,36 @@ function mostrardetalle(id) {
       console.log('Error al obtener los detalles de la factura.');
     },
   });
+}
+
+function obtenerSaldoCalculado() {
+  // Obtener el mes y año actual
+  var fechaActual = new Date();
+  var mesActual = fechaActual.getMonth() + 1; // Sumar 1 porque los meses en JavaScript son base 0
+  var anioActual = fechaActual.getFullYear();
+  // Realizar una solicitud AJAX para obtener el saldo calculado desde el servidor
+  $.ajax({
+    url: base_url + 'Usuarios/totalcomprasmes', // Agrega la ruta correcta a tu servidor
+    type: 'GET',
+    data: {
+      mes: mesActual,
+      anio: anioActual,
+    },
+    dataType: 'json',
+    success: function (saldoCalculado) {
+      var totalc = saldoCalculado[0].totalc;
+      console.log('Total calculado:', totalc);
+      $('#Saldo').text(totalc);
+    },
+    error: function () {
+      console.log('Error al obtener el saldo calculado desde el servidor.');
+    },
+  });
+}
+
+// Llamar a la función cada 5 segundos
+setInterval(obtenerSaldoCalculado, 60000); // 60000 milisegundos = 60 segundos
+
+function obtenerSaldoCalculado2() {
+  alert('La función se está ejecutando al cargar la página.');
 }
