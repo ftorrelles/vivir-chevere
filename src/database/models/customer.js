@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       Customer.hasMany(models.Movement, {
         foreignKey: 'dispatcherId',
       });
+      Customer.hasMany(models.cuenta_cliente, {
+        foreignKey: 'customerid',
+      });
     }
   }
   Customer.init(

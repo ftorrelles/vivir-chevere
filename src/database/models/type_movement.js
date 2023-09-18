@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Type_movement.hasMany(models.Movement, {
         foreignKey: 'typemovementId',
       });
+      Type_movement.hasMany(models.cuenta_cliente, {
+        foreignKey: 'typemovementid',
+      });
     }
   }
   Type_movement.init(
