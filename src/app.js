@@ -14,6 +14,8 @@ const typeCustomerRouter = require('./routes/typeCustomers.routes.js');
 const customerRouter = require('./routes/customers.routes.js');
 const typeMovementRouter = require('./routes/typeMovements.routes.js');
 const specificationRouter = require('./routes/specifications.routes.js');
+const productRouter = require('./routes/products.routes.js');
+const branchRouter = require('./routes/branches.routes.js');
 
 const app = express();
 
@@ -41,6 +43,8 @@ app.use('/api/v1/typeCustomers', typeCustomerRouter);
 app.use('/api/v1/customers', customerRouter);
 app.use('/api/v1/typeMovements', typeMovementRouter);
 app.use('/api/v1/specifications', specificationRouter);
+app.use('/api/v1/products', productRouter);
+app.use('/api/v1/branches', branchRouter);
 
 app.all('*', (req, res, next) => {
   return next(
