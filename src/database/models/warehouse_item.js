@@ -1,22 +1,22 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Wharehouse_item extends Model {
+  class Warehouse_item extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Wharehouse_item.belongsTo(models.Warehouse, {
+      Warehouse_item.belongsTo(models.Warehouse, {
         foreignKey: 'warehouseId',
       });
-      Wharehouse_item.belongsTo(models.Product, {
+      Warehouse_item.belongsTo(models.Product, {
         foreignKey: 'productId',
       });
     }
   }
-  Wharehouse_item.init(
+  Warehouse_item.init(
     {
       id: {
         allowNull: false,
@@ -36,11 +36,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
+      },
     },
     {
       sequelize,
-      modelName: 'Wharehouse_item',
+      modelName: 'Warehouse_item',
     }
   );
-  return Wharehouse_item;
+  return Warehouse_item;
 };
