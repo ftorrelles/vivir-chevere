@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'typemovementid',
       });
       cuenta_cliente.belongsTo(models.Customer, {
-        foreignKey: 'Customerid',
+        foreignKey: 'customerid',
       });
     }
   }
@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DECIMAL(10, 2),
         defaultValue: 0.0,
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
       },
     },
     {

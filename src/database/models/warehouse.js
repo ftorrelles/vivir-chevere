@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Warehouse.belongsTo(models.Branch, {
         foreignKey: 'branchId',
       });
-      Warehouse.hasMany(models.Wharehouse_item, {
+      Warehouse.hasMany(models.Warehouse_item, {
         foreignKey: 'warehouseId',
       });
     }
@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       branchId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
         allowNull: false,
       },
     },

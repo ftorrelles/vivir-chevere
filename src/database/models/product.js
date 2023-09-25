@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Product.hasMany(models.Movement_item, {
         foreignKey: 'productId',
       });
-      Product.hasMany(models.Wharehouse_item, {
+      Product.hasMany(models.Warehouse_item, {
         foreignKey: 'productId',
       });
     }
@@ -44,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       price_general: {
         type: DataTypes.DECIMAL,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
         allowNull: false,
       },
     },

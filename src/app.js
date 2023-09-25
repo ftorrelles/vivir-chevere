@@ -9,10 +9,19 @@ const xss = require('xss-clean');
 const AppError = require('./utils/appError.js');
 const globalErrorHandler = require('./controllers/error.controller');
 
+//inportacion routes
 const roleRouter = require('./routes/roles.routes.js');
 const typeCustomerRouter = require('./routes/typeCustomers.routes.js');
 const customerRouter = require('./routes/customers.routes.js');
 const typeMovementRouter = require('./routes/typeMovements.routes.js');
+const specificationRouter = require('./routes/specifications.routes.js');
+const productRouter = require('./routes/products.routes.js');
+const branchRouter = require('./routes/branches.routes.js');
+const warehouseRouter = require('./routes/warehouses.routes.js');
+const warehouse_itemRouter = require('./routes/warehouse_items.routes.js');
+const cuenta_clienteRouter = require('./routes/cuenta_clientes.routes.js');
+const movementRouter = require('./routes/movements.routes.js');
+const movement_itemsRouter = require('./routes/movement_items.routes.js');
 
 const app = express();
 
@@ -39,6 +48,14 @@ app.use('/api/v1/roles', roleRouter);
 app.use('/api/v1/typeCustomers', typeCustomerRouter);
 app.use('/api/v1/customers', customerRouter);
 app.use('/api/v1/typeMovements', typeMovementRouter);
+app.use('/api/v1/specifications', specificationRouter);
+app.use('/api/v1/products', productRouter);
+app.use('/api/v1/branches', branchRouter);
+app.use('/api/v1/warehouses', warehouseRouter);
+app.use('/api/v1/warehouse_items', warehouse_itemRouter);
+app.use('/api/v1/cuenta_clientes', cuenta_clienteRouter);
+app.use('/api/v1/movements', movementRouter);
+app.use('/api/v1/movement_items', movement_itemsRouter);
 
 app.all('*', (req, res, next) => {
   return next(
