@@ -2,34 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Warehouses', {
+    await queryInterface.createTable('PasswordResetCodes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      branchId: {
-        type: Sequelize.INTEGER,
+      code: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'Branches',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
       },
-      createdAt: {
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Warehouses');
+    await queryInterface.dropTable('PasswordResetCodes');
   },
 };

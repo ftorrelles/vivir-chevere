@@ -2,26 +2,21 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Movement extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Movement.belongsTo(models.Type_movement, {
-        foreignKey: 'typemovementId',
+        foreignKey: 'typemovement_id',
       });
       Movement.hasMany(models.Movement_item, {
-        foreignKey: 'movementId',
+        foreignKey: 'movement_id',
       });
       Movement.belongsTo(models.Customer, {
-        foreignKey: 'customerId',
+        foreignKey: 'customer_id',
       });
       Movement.belongsTo(models.Branch, {
-        foreignKey: 'branchId',
+        foreignKey: 'branch_id',
       });
       Movement.belongsTo(models.Customer, {
-        foreignKey: 'dispatcherId',
+        foreignKey: 'dispatcher_id',
       });
     }
   }
@@ -40,24 +35,41 @@ module.exports = (sequelize, DataTypes) => {
       description: {
         type: DataTypes.STRING,
       },
-      typemovementId: {
+      typemovement_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+          table: 'type_movements',
+          field: 'id',
+        },
       },
-      customerId: {
+      customer_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+          table: 'customers',
+          field: 'id',
+        },
       },
-      branchId: {
+      branch_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+          table: 'branches',
+          field: 'id',
+        },
       },
-      dispatcherId: {
+      dispatcher_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+          table: 'customers',
+          field: 'id',
+        },
       },
       total: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
+        defaultValue: 0.0,
         allowNull: false,
       },
       status: {
@@ -69,6 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Movement',
+      timestamps: true,
     }
   );
   return Movement;

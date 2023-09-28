@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Specifications', {
+    await queryInterface.createTable('Type_movements', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,20 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.STRING(25),
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Specifications');
+    await queryInterface.dropTable('Type_movements');
   },
 };

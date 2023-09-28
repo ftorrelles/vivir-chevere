@@ -2,14 +2,9 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Specification extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Specification.hasMany(models.Product, {
-        foreignKey: 'specificationId',
+        foreignKey: 'specification_id',
       });
     }
   }
@@ -29,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Specification',
+      timestamps: true,
     }
   );
   return Specification;

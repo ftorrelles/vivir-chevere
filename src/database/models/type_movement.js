@@ -2,17 +2,12 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Type_movement extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Type_movement.hasMany(models.Movement, {
-        foreignKey: 'typemovementId',
+        foreignKey: 'typemovement_id',
       });
-      Type_movement.hasMany(models.cuenta_cliente, {
-        foreignKey: 'typemovementid',
+      Type_movement.hasMany(models.Cuenta_cliente, {
+        foreignKey: 'typemovement_id',
       });
     }
   }
@@ -32,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Type_movement',
+      timestamps: true,
     }
   );
   return Type_movement;

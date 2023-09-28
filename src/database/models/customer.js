@@ -1,39 +1,29 @@
 'use strict';
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Customer extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    // En el modelo Customer
     static associate(models) {
-      //define association here
-
       Customer.belongsTo(models.TypeCustomer, {
-        foreignKey: 'typecustomerId',
+        foreignKey: 'type_customer_id',
         as: 'typeCustomer',
       });
       Customer.hasMany(models.Movement, {
-        foreignKey: 'customerId',
-      });
-      Customer.belongsTo(models.Role, {
-        foreignKey: 'roleId',
-      });
-      Customer.hasMany(models.Branch, {
-        foreignKey: 'customerId',
-      });
-      Customer.hasMany(models.EmailCode, {
-        foreignKey: 'customerId',
+        foreignKey: 'customer_id',
       });
       Customer.hasMany(models.Movement, {
-        foreignKey: 'dispatcherId',
+        foreignKey: 'dispatcher_id',
       });
-      Customer.hasMany(models.cuenta_cliente, {
-        foreignKey: 'customerid',
+      Customer.hasMany(models.Cuenta_cliente, {
+        foreignKey: 'customer_id',
+      });
+      Customer.hasMany(models.EmailCode, {
+        foreignKey: 'customer_id',
       });
     }
   }
+
   Customer.init(
     {
       id: {
@@ -42,15 +32,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      firstName: {
+      first_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
+      last_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      identificationDocument: {
+      identification_document: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -67,40 +57,52 @@ module.exports = (sequelize, DataTypes) => {
       birthdate: {
         type: DataTypes.DATEONLY,
       },
-      typecustomerId: {
+      type_customer_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      roleId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+          model: 'type_customers',
+          key: 'id',
+        },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      role_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'roles',
+          key: 'id',
+        },
+      },
       ref: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      isVerified: {
+      is_verified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
       },
-      username: {
+      user_name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       status: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
         allowNull: false,
       },
     },
     {
       sequelize,
       modelName: 'Customer',
+      tableName: 'customers',
+      underscored: true,
+      timestamps: true,
     }
   );
 

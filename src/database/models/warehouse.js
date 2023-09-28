@@ -2,17 +2,12 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Warehouse extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Warehouse.belongsTo(models.Branch, {
-        foreignKey: 'branchId',
+        foreignKey: 'branch_id',
       });
-      Warehouse.hasMany(models.Warehouse_item, {
-        foreignKey: 'warehouseId',
+      Warehouse.hasMany(models.Product, {
+        foreignKey: 'products_id',
       });
     }
   }
@@ -24,7 +19,23 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      branchId: {
+      product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          table: 'products',
+          field: 'id',
+        },
+      },
+      branch_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          table: 'branches',
+          field: 'id',
+        },
+      },
+      quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -37,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Warehouse',
+      timestamps: true,
     }
   );
   return Warehouse;

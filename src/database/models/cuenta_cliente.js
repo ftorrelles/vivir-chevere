@@ -1,22 +1,17 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class cuenta_cliente extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class Cuenta_cliente extends Model {
     static associate(models) {
-      cuenta_cliente.belongsTo(models.Type_movement, {
-        foreignKey: 'typemovementid',
+      Cuenta_cliente.belongsTo(models.Type_movement, {
+        foreignKey: 'typemovement_id',
       });
-      cuenta_cliente.belongsTo(models.Customer, {
-        foreignKey: 'customerid',
+      Cuenta_cliente.belongsTo(models.Customer, {
+        foreignKey: 'customer_id',
       });
     }
   }
-  cuenta_cliente.init(
+  Cuenta_cliente.init(
     {
       id: {
         allowNull: false,
@@ -24,13 +19,21 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      typemovementid: {
-        allowNull: false,
+      typemovement_id: {
+        allowNull: true,
         type: DataTypes.INTEGER,
+        references: {
+          table: 'type_movements',
+          field: 'id',
+        },
       },
-      customerid: {
-        allowNull: false,
+      customer_id: {
+        allowNull: true,
         type: DataTypes.INTEGER,
+        references: {
+          table: 'customers',
+          field: 'id',
+        },
       },
       ingreso: {
         allowNull: false,
@@ -50,8 +53,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'cuenta_cliente',
+      modelName: 'Cuenta_cliente',
+      timestamps: true,
     }
   );
-  return cuenta_cliente;
+  return Cuenta_cliente;
 };

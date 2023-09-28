@@ -1,19 +1,18 @@
 'use strict';
+
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class TypeCustomer extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    // En el modelo TypeCustomer
     static associate(models) {
-      //define association here
       TypeCustomer.hasMany(models.Customer, {
-        foreignKey: 'typecustomerId',
+        foreignKey: 'type_customer_id',
+        as: 'customers',
       });
     }
   }
+
   TypeCustomer.init(
     {
       id: {
@@ -30,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'TypeCustomer',
+      tableName: 'type_customers', // Cambio en el nombre de la tabla
+      // underscored: true, // Usa nombres de columna en notación snake_case
+      timestamps: true, // Habilita la opción de timestamps
     }
   );
+
   return TypeCustomer;
 };

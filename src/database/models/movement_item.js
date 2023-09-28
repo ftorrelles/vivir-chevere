@@ -2,17 +2,12 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Movement_item extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Movement_item.belongsTo(models.Movement, {
-        foreignKey: 'movementId',
+        foreignKey: 'movement_id',
       });
       Movement_item.belongsTo(models.Product, {
-        foreignKey: 'productId',
+        foreignKey: 'product_id',
       });
     }
   }
@@ -24,22 +19,30 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      movementId: {
+      movement_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+          table: 'movements',
+          field: 'id',
+        },
       },
-      productId: {
+      product_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+          table: 'products',
+          field: 'id',
+        },
       },
       quantity: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       total_line: {
         type: DataTypes.DECIMAL,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 0.0,
       },
       status: {
         type: DataTypes.BOOLEAN,
@@ -50,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Movement_item',
+      timestamps: true,
     }
   );
   return Movement_item;
