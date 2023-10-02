@@ -7,7 +7,7 @@ class Movement_itemsServices {
       where: {
         status: true,
       },
-      include: [{ model: db.Movement }],
+      include: [{ model: db.Movement }, { model: db.Product }],
     });
     return movement_items;
   }
@@ -21,7 +21,7 @@ class Movement_itemsServices {
         id: movement_itemId,
         status: true,
       },
-      include: [{ model: db.Movement }],
+      include: [{ model: db.Movement }, { model: db.Product }],
     });
     if (!movement_item)
       throw new AppError(

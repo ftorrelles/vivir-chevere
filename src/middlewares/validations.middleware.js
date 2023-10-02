@@ -14,11 +14,11 @@ exports.validateFields = (req, res, next) => {
 };
 
 exports.CreateCustomerValidations = [
-  body('firstName').notEmpty().withMessage('firstName cannot be empty'),
-  body('lastName').notEmpty().withMessage('lastName cannot be empty'),
-  body('identificationDocument')
+  body('first_name').notEmpty().withMessage('first_name cannot be empty'),
+  body('last_name').notEmpty().withMessage('last_name cannot be empty'),
+  body('identification_document')
     .notEmpty()
-    .withMessage('identificationDocument cannot be empty'),
+    .withMessage('identification_document cannot be empty'),
   body('email').notEmpty().withMessage('email cannot be empty'),
   body('phone').notEmpty().withMessage('phone cannot be empty'),
   body('birthdate').notEmpty().withMessage('birthdate cannot be empty'),

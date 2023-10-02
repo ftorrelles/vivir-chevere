@@ -1,4 +1,6 @@
 'use strict';
+const Sequelize = require('sequelize');
+
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -7,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Customer.belongsTo(models.TypeCustomer, {
         foreignKey: 'type_customer_id',
-        as: 'typeCustomer',
+      });
+      Customer.belongsTo(models.Role, {
+        foreignKey: 'role_id',
       });
       Customer.hasMany(models.Movement, {
         foreignKey: 'customer_id',
@@ -95,6 +99,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false,
+      },
+      created_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
       },
     },
     {

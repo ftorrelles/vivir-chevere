@@ -16,7 +16,7 @@ exports.create = catchAsync(async (req, res, next) => {
   const {
     name,
     measure,
-    specificationId,
+    specification_id,
     price_afiliate,
     price_general,
     status,
@@ -25,7 +25,7 @@ exports.create = catchAsync(async (req, res, next) => {
   const product = await productsServices.create({
     name,
     measure,
-    specificationId,
+    specification_id,
     price_afiliate,
     price_general,
     status,
@@ -50,7 +50,7 @@ exports.update = catchAsync(async (req, res, next) => {
   const {
     name,
     measure,
-    specificationId,
+    specification_id,
     price_afiliate,
     price_general,
     status,
@@ -60,7 +60,7 @@ exports.update = catchAsync(async (req, res, next) => {
   const productUpdated = await productsServices.update(product, {
     name,
     measure,
-    specificationId,
+    specification_id,
     price_afiliate,
     price_general,
     status,

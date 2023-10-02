@@ -3,20 +3,17 @@ const db = require('../database/models/index');
 const AppError = require('../utils/appError');
 
 class CustomersServices {
-  async findAll(firstName, lastName, identificationDocument) {
+  async findAll(first_name, last_name, identification_document) {
     const where = {};
-    if (firstName) where.firstName = { [Op.iLike]: `%${firstName}%` };
-    if (lastName) where.lastName = { [Op.iLike]: `%${lastName}%` };
-    if (identificationDocument)
-      where.identificationDocument = identificationDocument;
+    if (first_name) where.first_name = { [Op.iLike]: `%${first_name}%` };
+    if (last_name) where.last_name = { [Op.iLike]: `%${last_name}%` };
+    if (identification_document)
+      where.identification_document = identification_document;
     where.status = {
       [Op.eq]: true,
     };
     const customers = await db.Customer.findAll({
-      include: [
-        { model: db.TypeCustomer, as: 'typeCustomer' },
-        { model: db.Role },
-      ],
+      include: [{ model: db.TypeCustomer }, { model: db.Role }],
       where,
     });
 
@@ -34,22 +31,19 @@ class CustomersServices {
         status: true,
       },
       include: [
-        { model: db.TypeCustomer, as: 'typeCustomer' },
-        { model: db.Role, as: 'Role' }, // Asegúrate de que el nombre del modelo y el alias coincidan con tu definición de modelo
+        { model: db.TypeCustomer },
+        { model: db.Role }, // Asegúrate de que el nombre del modelo y el alias coincidan con tu definición de modelo
       ],
     });
     if (!customer)
-      throw new AppError(`Author with id ${customerId} not found`, 404);
+      throw new AppError(`Customer with id ${customerId} not found`, 404);
     return customer;
   }
 
   async findByEmail(email) {
     return await db.Customer.findOne({
       where: { email },
-      include: [
-        { model: db.TypeCustomer, as: 'typeCustomer' },
-        { model: db.Role },
-      ],
+      include: [{ model: db.TypeCustomer }, { model: db.Role }],
     });
   }
 

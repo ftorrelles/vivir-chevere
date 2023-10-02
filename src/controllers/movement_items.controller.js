@@ -13,11 +13,11 @@ exports.findAll = catchAsync(async (req, res, next) => {
   });
 });
 exports.create = catchAsync(async (req, res, next) => {
-  const { movementId, productId, quantity, total_line, status } = req.body;
+  const { movement_id, product_id, quantity, total_line, status } = req.body;
 
   const movement_item = await movement_itemsServices.create({
-    movementId,
-    productId,
+    movement_id,
+    product_id,
     quantity,
     total_line,
     status,
@@ -39,14 +39,14 @@ exports.findOne = catchAsync(async (req, res, next) => {
 });
 exports.update = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { movementId, productId, quantity, total_line, status } = req.body;
+  const { movement_id, product_id, quantity, total_line, status } = req.body;
 
   const movement_item = await movement_itemsServices.findOne(id);
   const movement_itemUpdated = await movement_itemsServices.update(
     movement_item,
     {
-      movementId,
-      productId,
+      movement_id,
+      product_id,
       quantity,
       total_line,
       status,

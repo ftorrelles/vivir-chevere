@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await Promise.all([
-      await queryInterface.createTable('EmailCodes', {
+      await queryInterface.createTable('Email_codes', {
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -32,7 +32,7 @@ module.exports = {
           ),
         },
       }),
-      queryInterface.addConstraint('EmailCodes', {
+      queryInterface.addConstraint('Email_codes', {
         fields: ['customer_id'],
         type: 'foreign key',
         name: 'fk_EmailCodes_customers',
@@ -44,6 +44,6 @@ module.exports = {
     ]);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('EmailCodes');
+    await queryInterface.dropTable('Email_codes');
   },
 };

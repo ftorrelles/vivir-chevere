@@ -1,4 +1,5 @@
 'use strict';
+const Sequelize = require('sequelize');
 
 const { Model } = require('sequelize');
 
@@ -25,12 +26,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      created_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
+      },
     },
     {
       sequelize,
       modelName: 'TypeCustomer',
       tableName: 'type_customers', // Cambio en el nombre de la tabla
-      // underscored: true, // Usa nombres de columna en notación snake_case
+      underscored: true, // Usa nombres de columna en notación snake_case
       timestamps: true, // Habilita la opción de timestamps
     }
   );

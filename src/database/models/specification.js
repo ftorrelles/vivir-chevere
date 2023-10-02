@@ -1,4 +1,5 @@
 'use strict';
+const Sequelize = require('sequelize');
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Specification extends Model {
@@ -20,11 +21,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
+      },
     },
     {
       sequelize,
       modelName: 'Specification',
-      timestamps: true,
+      underscored: true, // Usa nombres de columna en notación snake_case
+      timestamps: true, // Habilita la opción de timestamps
     }
   );
   return Specification;

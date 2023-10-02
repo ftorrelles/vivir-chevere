@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Cuenta_cliente extends Model {
     static associate(models) {
@@ -50,11 +51,24 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: true,
         allowNull: false,
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
+      },
     },
     {
       sequelize,
       modelName: 'Cuenta_cliente',
-      timestamps: true,
+      underscored: true, // Usa nombres de columna en notación snake_case
+      timestamps: true, // Habilita la opción de timestamps
     }
   );
   return Cuenta_cliente;

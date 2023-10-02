@@ -1,4 +1,5 @@
 'use strict';
+const Sequelize = require('sequelize');
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class EmailCode extends Model {
@@ -27,10 +28,24 @@ module.exports = (sequelize, DataTypes) => {
           field: 'id',
         },
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal(
+          'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ),
+      },
     },
     {
       sequelize,
       modelName: 'EmailCode',
+      underscored: true,
+      timestamps: true,
     }
   );
   return EmailCode;

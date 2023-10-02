@@ -3,7 +3,7 @@ const AppError = require('../utils/appError');
 
 class Cuenta_clientesServices {
   async findAll() {
-    const cuenta_clientes = await db.cuenta_cliente.findAll({
+    const cuenta_clientes = await db.Cuenta_cliente.findAll({
       where: {
         status: true,
       },
@@ -12,11 +12,11 @@ class Cuenta_clientesServices {
     return cuenta_clientes;
   }
   async create(cuenta_clienteData) {
-    return await db.cuenta_cliente.create(cuenta_clienteData);
+    return await db.Cuenta_cliente.create(cuenta_clienteData);
   }
 
   async findOne(cuenta_clienteId) {
-    const cuenta_cliente = await db.cuenta_cliente.findOne({
+    const cuenta_cliente = await db.Cuenta_cliente.findOne({
       where: {
         id: cuenta_clienteId,
         status: true,

@@ -13,10 +13,12 @@ exports.findAll = catchAsync(async (req, res, next) => {
   });
 });
 exports.create = catchAsync(async (req, res, next) => {
-  const { branchId, status } = req.body;
+  const { branch_id, product_id, quantity, status } = req.body;
 
   const warehouse = await warehousesServices.create({
-    branchId,
+    branch_id,
+    product_id,
+    quantity,
     status,
   });
   return res.status(201).json({
@@ -36,11 +38,13 @@ exports.findOne = catchAsync(async (req, res, next) => {
 });
 exports.update = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { branchId, status } = req.body;
+  const { branch_id, product_id, quantity, status } = req.body;
 
   const warehouse = await warehousesServices.findOne(id);
   const warehouseUpdated = await warehousesServices.update(warehouse, {
-    branchId,
+    branch_id,
+    product_id,
+    quantity,
     status,
   });
   return res.status(200).json({

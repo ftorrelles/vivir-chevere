@@ -13,11 +13,11 @@ exports.findAll = catchAsync(async (req, res, next) => {
   });
 });
 exports.create = catchAsync(async (req, res, next) => {
-  const { typemovementid, customerid, ingreso, egreso, status } = req.body;
+  const { typemovement_id, customer_id, ingreso, egreso, status } = req.body;
 
   const cuenta_cliente = await cuenta_clientesServices.create({
-    typemovementid,
-    customerid,
+    typemovement_id,
+    customer_id,
     ingreso,
     egreso,
     status,
@@ -39,14 +39,14 @@ exports.findOne = catchAsync(async (req, res, next) => {
 });
 exports.update = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { typemovementid, customerid, ingreso, egreso, status } = req.body;
+  const { typemovement_id, customer_id, ingreso, egreso, status } = req.body;
 
   const cuenta_cliente = await cuenta_clientesServices.findOne(id);
   const cuenta_clienteUpdated = await cuenta_clientesServices.update(
     cuenta_cliente,
     {
-      typemovementid,
-      customerid,
+      typemovement_id,
+      customer_id,
       ingreso,
       egreso,
       status,

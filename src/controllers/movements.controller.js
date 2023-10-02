@@ -16,10 +16,10 @@ exports.create = catchAsync(async (req, res, next) => {
   const {
     movement_date,
     description,
-    typemovementId,
-    customerId,
-    branchId,
-    dispatcherId,
+    typemovement_id,
+    customer_id,
+    branch_id,
+    dispatcher_id,
     total,
     status,
   } = req.body;
@@ -27,10 +27,10 @@ exports.create = catchAsync(async (req, res, next) => {
   const movement = await movementsServices.create({
     movement_date,
     description,
-    typemovementId,
-    customerId,
-    branchId,
-    dispatcherId,
+    typemovement_id,
+    customer_id,
+    branch_id,
+    dispatcher_id,
     total,
     status,
   });
@@ -54,10 +54,10 @@ exports.update = catchAsync(async (req, res, next) => {
   const {
     movement_date,
     description,
-    typemovementId,
-    customerId,
-    branchId,
-    dispatcherId,
+    typemovement_id,
+    customer_id,
+    branch_id,
+    dispatcher_id,
     total,
     status,
   } = req.body;
@@ -66,10 +66,10 @@ exports.update = catchAsync(async (req, res, next) => {
   const movementUpdated = await movementsServices.update(movement, {
     movement_date,
     description,
-    typemovementId,
-    customerId,
-    branchId,
-    dispatcherId,
+    typemovement_id,
+    customer_id,
+    branch_id,
+    dispatcher_id,
     total,
     status,
   });

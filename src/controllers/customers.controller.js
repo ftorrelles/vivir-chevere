@@ -10,11 +10,11 @@ const db = require('../database/models');
 const { log } = require('console');
 ////////////////////////////
 exports.findAll = catchAsync(async (req, res, next) => {
-  const { firstName, lastName, identificationDocument } = req.query;
+  const { first_name, last_name, identification_document } = req.query;
   const customers = await customerServices.findAll(
-    firstName,
-    lastName,
-    identificationDocument
+    first_name,
+    last_name,
+    identification_document
   );
   return res.status(200).json({
     status: 'success',
@@ -26,34 +26,34 @@ exports.findAll = catchAsync(async (req, res, next) => {
 
 exports.create = catchAsync(async (req, res, next) => {
   const {
-    firstName,
-    lastName,
-    identificationDocument,
+    first_name,
+    last_name,
+    identification_document,
     email,
     phone,
     birthdate,
-    typecustomerId,
-    roleId,
+    type_customer_id,
+    role_id,
     password,
     ref,
-    username,
+    user_name,
     status,
     frontBaseUrl,
   } = req.body;
   const encriptedPassword = await bcrypt.hash(password, 10);
 
   const customer = await customerServices.create({
-    firstName,
-    lastName,
-    identificationDocument,
+    first_name,
+    last_name,
+    identification_document,
     email,
     phone,
     birthdate,
-    typecustomerId,
-    roleId,
+    type_customer_id,
+    role_id,
     password: encriptedPassword,
     ref,
-    username,
+    user_name,
     status,
   });
   const code = require('crypto').randomBytes(32).toString('hex');
@@ -63,7 +63,7 @@ exports.create = catchAsync(async (req, res, next) => {
     to: email,
     subject: 'Codigo de verificacion web vivir chevere',
     html: `
-      <h1>holaa ${firstName}!!</h1>
+      <h1>holaa ${first_name}!!</h1>
       <p>Te saludamos tus socios de Vivir Chevere</p>
       <p>Ya casi terminamos</p>
       <p>Ve al siguiente enlace para verificar tu correo electrónico y asi puedas ingresar a tu oficina virtual</p>
@@ -71,14 +71,14 @@ exports.create = catchAsync(async (req, res, next) => {
       <br/>
       <h3>tus credenciales de ingreso son las siguientes</h3>
       <p>Usuario: ${email}</p>
-      <p>Contraseña: ${username}</p>
+      <p>Contraseña: ${user_name}</p>
     `,
   });
 
   // Guardar el código en tu base de datos usando el modelo EmailCode
   await db.EmailCode.create({
     code,
-    customerId: customer.id,
+    customer_id: customer.id,
   });
 
   return res.status(201).json({
@@ -103,35 +103,35 @@ exports.findOne = catchAsync(async (req, res, next) => {
 exports.update = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const {
-    firstName,
-    lastName,
-    identificationDocument,
+    first_name,
+    last_name,
+    identification_document,
     // email,
     phone,
     birthdate,
-    // typecustomerId,
-    roleId,
+    // type_customer_id,
+    role_id,
     // password,
     // ref,
-    // username,
+    // user_name,
     // status,
-    // isVerified,
+    // is_verified,
   } = req.body;
   // const customer = await customerServices.findOne(id);
   const customerUpdated = await customerServices.update(id, {
-    firstName,
-    lastName,
-    identificationDocument,
+    first_name,
+    last_name,
+    identification_document,
     // email,
     phone,
     birthdate,
-    // typecustomerId,
-    roleId,
+    // type_customer_id,
+    role_id,
     // password,
     // ref,
-    // username,
+    // user_name,
     // status,
-    // isVerified,
+    // is_verified,
   });
   return res.status(200).json({
     status: 'Success',
@@ -157,7 +157,7 @@ exports.sendPasswordRecoveryEmail = catchAsync(async (req, res) => {
     to: email,
     subject: 'Recuperación de contraseña - Vivir Chevere',
     html: `
-      <h1>Hola ${customer.firstName}!!</h1>
+      <h1>Hola ${customer.first_name}!!</h1>
       <p>Te saludamos desde Vivir Chevere</p>
       <p>Para completar el proceso de cambio de contraseña, sigue este enlace:</p>
       <a href="${link}">hacer click aqui</a>
@@ -224,8 +224,8 @@ exports.verifyEmail = catchAsync(async (req, res) => {
   const emailCode = await db.EmailCode.findOne({ where: { code } });
   if (!emailCode) return res.status(401).json({ message: 'invalid code' });
 
-  // Utiliza el servicio CustomersServices para actualizar el campo isVerified en la tabla Customer
-  await customerServices.update(emailCode.customerId, { isVerified: true });
+  // Utiliza el servicio CustomersServices para actualizar el campo is_verified en la tabla Customer
+  await customerServices.update(emailCode.customer_id, { is_verified: true });
   await emailCode.destroy();
 
   // return res.json(emailCode);
@@ -244,7 +244,7 @@ exports.login = catchAsync(async (req, res) => {
 
   if (!customer)
     return res.status(401).json({ message: 'invalid credentials' });
-  if (!customer.isVerified)
+  if (!customer.is_verified)
     return res.status(401).json({ message: 'unverified email' });
 
   const isValid = await bcrypt.compare(password, customer.password);
