@@ -7,7 +7,7 @@ class BranchesServices {
       where: {
         status: true,
       },
-      include: [{ model: db.Customer }],
+      include: [{ model: db.Customer }, { model: db.Warehouse }],
     });
     return branches;
   }
@@ -21,7 +21,7 @@ class BranchesServices {
         id: branchId,
         status: true,
       },
-      include: [{ model: db.Customer }],
+      include: [{ model: db.Customer }, { model: db.Warehouse }],
     });
     if (!branch)
       throw new AppError(`Branch with id ${branchId} not found`, 404);

@@ -5,15 +5,19 @@ const AppError = require('../utils/appError');
 class CustomersServices {
   async findAll(first_name, last_name, identification_document) {
     const where = {};
-    if (first_name) where.first_name = { [Op.iLike]: `%${first_name}%` };
-    if (last_name) where.last_name = { [Op.iLike]: `%${last_name}%` };
+    if (first_name) where.first_name = { [Op.like]: `%${first_name}%` };
+    if (last_name) where.last_name = { [Op.like]: `%${last_name}%` };
     if (identification_document)
       where.identification_document = identification_document;
     where.status = {
       [Op.eq]: true,
     };
     const customers = await db.Customer.findAll({
-      include: [{ model: db.TypeCustomer }, { model: db.Role }],
+      include: [
+        { model: db.TypeCustomer },
+        { model: db.Role },
+        { model: db.Branch },
+      ],
       where,
     });
 
@@ -32,7 +36,8 @@ class CustomersServices {
       },
       include: [
         { model: db.TypeCustomer },
-        { model: db.Role }, // Asegúrate de que el nombre del modelo y el alias coincidan con tu definición de modelo
+        { model: db.Role },
+        { model: db.Branch },
       ],
     });
     if (!customer)
@@ -43,7 +48,11 @@ class CustomersServices {
   async findByEmail(email) {
     return await db.Customer.findOne({
       where: { email },
-      include: [{ model: db.TypeCustomer }, { model: db.Role }],
+      include: [
+        { model: db.TypeCustomer },
+        { model: db.Role },
+        { model: db.Branch },
+      ],
     });
   }
 

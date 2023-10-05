@@ -25,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
       Customer.hasMany(models.EmailCode, {
         foreignKey: 'customer_id',
       });
+      Customer.hasMany(models.Branch, {
+        foreignKey: 'customer_id',
+      });
     }
   }
 
