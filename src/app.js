@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
 
-const AppError = require('./utils/appError.js');
+const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error.controller');
 
 //inportacion routes
