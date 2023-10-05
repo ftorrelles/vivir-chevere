@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const db = require('../database/models/index');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 
 class CustomersServices {
   async findAll(first_name, last_name, identification_document) {

@@ -1,5 +1,5 @@
 const db = require('../database/models/index');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 
 class WarehousesServices {
   async findAll() {
