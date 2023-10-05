@@ -57,6 +57,10 @@ app.use('/api/v1/cuenta_clientes', cuenta_clienteRouter);
 app.use('/api/v1/movements', movementRouter);
 app.use('/api/v1/movement_items', movement_itemsRouter);
 
+// Agregar una ruta para la ruta raíz (/)
+app.get('/', (req, res) => {
+  res.send('Welcome to your app!'); // Puedes personalizar el mensaje de bienvenida.
+});
 // app.use('*', (req, res, next) => {
 //   next(new AppError(`can't find ${req.originalUrl} on this server!`, 404));
 // });
