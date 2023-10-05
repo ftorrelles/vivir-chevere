@@ -5,8 +5,10 @@ const hpp = require('hpp');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
+const path = require('path');
 
-const AppError = require('./utils/AppError');
+// const AppError = require('./utils/AppError');
+const AppError = require(path.join(__dirname, 'utils', 'AppError'));
 const globalErrorHandler = require('./controllers/error.controller');
 
 //inportacion routes
@@ -55,10 +57,8 @@ app.use('/api/v1/cuenta_clientes', cuenta_clienteRouter);
 app.use('/api/v1/movements', movementRouter);
 app.use('/api/v1/movement_items', movement_itemsRouter);
 
-app.all('*', (req, res, next) => {
-  return next(
-    new AppError(`can't find ${req.originalUrl} on this server!`, 404)
-  );
+app.use('*', (req, res, next) => {
+  next(new AppError(`can't find ${req.originalUrl} on this server!`, 404));
 });
 
 app.use(globalErrorHandler);
