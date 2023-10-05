@@ -57,8 +57,14 @@ app.use('/api/v1/cuenta_clientes', cuenta_clienteRouter);
 app.use('/api/v1/movements', movementRouter);
 app.use('/api/v1/movement_items', movement_itemsRouter);
 
-app.use('*', (req, res, next) => {
-  next(new AppError(`can't find ${req.originalUrl} on this server!`, 404));
+// app.use('*', (req, res, next) => {
+//   next(new AppError(`can't find ${req.originalUrl} on this server!`, 404));
+// });
+
+app.all('*', (req, res, next) => {
+  return next(
+    new AppError(`can't find ${req.originalUrl} on this server!`, 404)
+  );
 });
 
 app.use(globalErrorHandler);
