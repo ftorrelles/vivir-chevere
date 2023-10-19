@@ -7,7 +7,11 @@ class MovementsServices {
       where: {
         status: true,
       },
-      include: [{ model: db.Customer }, { model: db.Type_movement }],
+      include: [
+        { model: db.Customer },
+        { model: db.Type_movement },
+        { model: db.Movement_item },
+      ],
     });
     return movements;
   }

@@ -36,6 +36,27 @@ class WarehousesServices {
     const warehouse = await this.findOne(warehouseId);
     return await warehouse.update({ status: false });
   }
+
+  async findByBranchId(branchId) {
+    const warehouse = await db.Warehouse.findOne({
+      where: {
+        branch_id: branchId,
+        status: true, // Asegúrate de que el almacén esté activo
+      },
+    });
+    if (!warehouse) {
+      throw new AppError(
+        `Warehouse for branch with id ${branchId} not found`,
+        404
+      );
+    }
+    return warehouse;
+  }
+
+  async updateQuantity(warehouseId, newQuantity) {
+    const warehouse = await this.findOne(warehouseId);
+    return await warehouse.update({ quantity: newQuantity });
+  }
 }
 
 module.exports = WarehousesServices;
