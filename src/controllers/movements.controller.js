@@ -9,6 +9,9 @@ const movement_itemsServices = new Movement_itemsServices();
 const WarehousesServices = require('../services/warehouses.services');
 const warehousesServices = new WarehousesServices();
 
+const CustomersServices = require('../services/customers.services');
+const customerServices = new CustomersServices();
+
 const db = require('../database/models');
 
 exports.findAll = catchAsync(async (req, res, next) => {
@@ -51,10 +54,26 @@ exports.create = catchAsync(async (req, res, next) => {
     // Obtener el ID del movimiento creado
     const movementId = movement.id;
 
-    // Crear los objetos movement_items y asignar el movimiento_id
+    // Crear los objetos movement_items y asignar el movimiento_id al mismo tiempo si es un producto afiliador lo afilia
     const createdMovementItems = await Promise.all(
       movement_items.map(async (item) => {
         const { product_id, quantity, total_line, status } = item;
+        console.log(product_id);
+        // Verificar si es un producto afiliador
+        if (product_id == 1) {
+          //colocar el id de los productos que afilian
+          // Primero, asegúrate de que el cliente exista
+          const customer = await customerServices.findOne(customer_id);
+          console.log(customer.id);
+
+          if (customer) {
+            // Si el cliente existe, puedes actualizar su tipo de cliente a afiliado
+            await customerServices.update(customer.id, { type_customer_id: 1 });
+          } else {
+            console.error('El cliente no existe.');
+          }
+        }
+        // Luego, crea el objeto movement_items
         return await movement_itemsServices.create({
           movement_id: movementId,
           product_id,

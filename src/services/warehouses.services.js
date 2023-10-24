@@ -7,7 +7,10 @@ class WarehousesServices {
       where: {
         status: true,
       },
-      include: [{ model: db.Branch }, { model: db.Product }],
+      include: [
+        { model: db.Branch },
+        { model: db.Product, include: [{ model: db.Specification }] },
+      ],
     });
     return warehouses;
   }
@@ -21,7 +24,10 @@ class WarehousesServices {
         id: warehouseId,
         status: true,
       },
-      include: [{ model: db.Branch }, { model: db.Product }],
+      include: [
+        { model: db.Branch },
+        { model: db.Product, include: [{ model: db.Specification }] },
+      ],
     });
     if (!warehouse)
       throw new AppError(`Warehouse with id ${warehouseId} not found`, 404);

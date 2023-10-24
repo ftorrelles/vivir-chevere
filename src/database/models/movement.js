@@ -12,12 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       });
       Movement.belongsTo(models.Customer, {
         foreignKey: 'customer_id',
+        as: 'customer',
       });
       Movement.belongsTo(models.Branch, {
         foreignKey: 'branch_id',
       });
       Movement.belongsTo(models.Customer, {
         foreignKey: 'dispatcher_id',
+        as: 'dispatcher',
       });
     }
   }

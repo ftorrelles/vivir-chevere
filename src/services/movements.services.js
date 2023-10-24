@@ -8,9 +8,10 @@ class MovementsServices {
         status: true,
       },
       include: [
-        { model: db.Customer },
+        { model: db.Customer, as: 'customer' },
+        { model: db.Customer, as: 'dispatcher' },
         { model: db.Type_movement },
-        { model: db.Movement_item },
+        { model: db.Movement_item, include: [{ model: db.Product }] },
       ],
     });
     return movements;
@@ -25,7 +26,11 @@ class MovementsServices {
         id: movementId,
         status: true,
       },
-      include: [{ model: db.Customer }, { model: db.Type_movement }],
+      include: [
+        { model: db.Customer },
+        { model: db.Type_movement },
+        { model: db.Movement_item, include: [{ model: db.Product }] },
+      ],
     });
     if (!movement)
       throw new AppError(`Movement with id ${movementId} not found`, 404);
