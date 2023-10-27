@@ -11,6 +11,7 @@ class MovementsServices {
         { model: db.Customer, as: 'customer' },
         { model: db.Customer, as: 'dispatcher' },
         { model: db.Type_movement },
+        { model: db.Branch },
         { model: db.Movement_item, include: [{ model: db.Product }] },
       ],
     });
