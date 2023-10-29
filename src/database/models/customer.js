@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
       Customer.hasMany(models.Branch, {
         foreignKey: 'customer_id',
       });
+      Customer.belongsTo(Customer, {
+        foreignKey: 'ref',
+        as: 'father',
+      });
+      Customer.hasMany(Customer, {
+        foreignKey: 'ref',
+        as: 'sons',
+      });
     }
   }
 

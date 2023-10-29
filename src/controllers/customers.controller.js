@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken'); // Importa el módulo jsonwebtoken
 
 const CustomersServices = require('../services/customers.services');
 const customerServices = new CustomersServices();
+
 // const EmailCode = require('../database/models/emailcode.js');
 const db = require('../database/models');
 const { log } = require('console');
@@ -112,7 +113,7 @@ exports.update = catchAsync(async (req, res, next) => {
     // type_customer_id,
     role_id,
     // password,
-    // ref,
+    ref,
     // user_name,
     // status,
     // is_verified,
@@ -128,7 +129,7 @@ exports.update = catchAsync(async (req, res, next) => {
     // type_customer_id,
     role_id,
     // password,
-    // ref,
+    ref,
     // user_name,
     // status,
     // is_verified,

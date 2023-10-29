@@ -17,6 +17,8 @@ class CustomersServices {
         { model: db.TypeCustomer },
         { model: db.Role },
         { model: db.Branch },
+        { model: db.Customer, as: 'father' },
+        { model: db.Customer, as: 'sons' },
       ],
       where,
     });
@@ -38,6 +40,8 @@ class CustomersServices {
         { model: db.TypeCustomer },
         { model: db.Role },
         { model: db.Branch },
+        { model: db.Customer, as: 'father' },
+        { model: db.Customer, as: 'sons' },
       ],
     });
     if (!customer)

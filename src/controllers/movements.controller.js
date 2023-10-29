@@ -58,13 +58,13 @@ exports.create = catchAsync(async (req, res, next) => {
     const createdMovementItems = await Promise.all(
       movement_items.map(async (item) => {
         const { product_id, quantity, total_line, status } = item;
-        console.log(product_id);
+        // console.log(product_id);
         // Verificar si es un producto afiliador
         if (product_id == 1) {
           //colocar el id de los productos que afilian
           // Primero, asegúrate de que el cliente exista
           const customer = await customerServices.findOne(customer_id);
-          console.log(customer.id);
+          // console.log(customer.id);
 
           if (customer) {
             // Si el cliente existe, puedes actualizar su tipo de cliente a afiliado
