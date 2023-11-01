@@ -19,6 +19,7 @@ exports.create = catchAsync(async (req, res, next) => {
     specification_id,
     price_afiliate,
     price_general,
+    promotion_type,
     status,
   } = req.body;
 
@@ -28,6 +29,7 @@ exports.create = catchAsync(async (req, res, next) => {
     specification_id,
     price_afiliate,
     price_general,
+    promotion_type,
     status,
   });
   return res.status(201).json({
@@ -53,6 +55,7 @@ exports.update = catchAsync(async (req, res, next) => {
     specification_id,
     price_afiliate,
     price_general,
+    promotion_type,
     status,
   } = req.body;
 
@@ -63,6 +66,7 @@ exports.update = catchAsync(async (req, res, next) => {
     specification_id,
     price_afiliate,
     price_general,
+    promotion_type,
     status,
   });
   return res.status(200).json({

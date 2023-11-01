@@ -51,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0.0,
         allowNull: false,
       },
+      promotion_type: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
       status: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,

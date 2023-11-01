@@ -123,6 +123,20 @@ exports.create = catchAsync(async (req, res, next) => {
       })
     );
 
+    // Verificar si el typemovement_id es igual a 5 (Cuenta sede)
+    if (typemovement_id == 1) {
+      // Calcular el ingreso restando el 15% al total
+      const ingreso = total * 0.85;
+
+      // Crear un registro en la tabla cuenta_clientes
+      await db.Cuenta_cliente.create({
+        typemovement_id: 5,
+        customer_id: dispatcher_id, // El dueño de la sede
+        ingreso,
+        egreso: 0,
+        status: true,
+      });
+    }
     return res.status(201).json({
       status: 'Success',
       message:
