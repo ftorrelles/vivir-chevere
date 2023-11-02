@@ -7,7 +7,10 @@ class Cuenta_clientesServices {
       where: {
         status: true,
       },
-      include: [{ model: db.Customer }, { model: db.Type_movement }],
+      include: [
+        { model: db.Customer, include: [{ model: db.Branch }] },
+        { model: db.Type_movement },
+      ],
     });
     return cuenta_clientes;
   }
