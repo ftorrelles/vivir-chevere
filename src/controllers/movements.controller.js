@@ -60,7 +60,7 @@ exports.create = catchAsync(async (req, res, next) => {
         const { product_id, quantity, total_line, status } = item;
         // console.log(product_id);
         // Verificar si es un producto afiliador
-        if (product_id == 1) {
+        if (product_id == 25) {
           //colocar el id de los productos que afilian
           // Primero, asegúrate de que el cliente exista
           const customer = await customerServices.findOne(customer_id);
