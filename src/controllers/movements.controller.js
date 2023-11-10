@@ -65,7 +65,6 @@ exports.create = catchAsync(async (req, res, next) => {
           // Primero, asegúrate de que el cliente exista
           const customer = await customerServices.findOne(customer_id);
           // console.log(customer.id);
-
           if (customer) {
             // Si el cliente existe, puedes actualizar su tipo de cliente a afiliado
             await customerServices.update(customer.id, { type_customer_id: 1 });

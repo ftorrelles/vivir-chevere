@@ -7,7 +7,7 @@ class ProductsServices {
       where: {
         status: true,
       },
-      include: [{ model: db.Specification }],
+      include: [{ model: db.Specification }, { model: db.Warehouse }],
     });
     return products;
   }
