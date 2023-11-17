@@ -122,16 +122,26 @@ exports.create = catchAsync(async (req, res, next) => {
       })
     );
 
-    // Verificar si el typemovement_id es igual a 5 (Cuenta sede)
+    // calcular cuenta por cobrar y por pagar de sede (Cuenta sede)
     if (typemovement_id == 1) {
-      // Calcular el ingreso restando el 15% al total
-      const ingreso = total * 0.85;
+      // Calcular cuenta por pagar sede restando el 15% al total
+      const cuentaPorPagar = total * 0.85;
+      // Calcular cuenta por cobrar sede el 15% al total
+      const cuentaPorCobrar = total * 0.15;
 
-      // Crear un registro en la tabla cuenta_clientes
+      // Crear un registro en la tabla cuenta_clientes de la cuenta por pagar de la sede
       await db.Cuenta_cliente.create({
         typemovement_id: 5,
         customer_id: dispatcher_id, // El dueño de la sede
-        ingreso,
+        ingreso: cuentaPorPagar,
+        egreso: 0,
+        status: true,
+      });
+      // Crear un registro en la tabla cuenta_clientes de la cuenta por cobrar de la sede
+      await db.Cuenta_cliente.create({
+        typemovement_id: 6,
+        customer_id: dispatcher_id, // El dueño de la sede
+        ingreso: cuentaPorCobrar,
         egreso: 0,
         status: true,
       });
