@@ -69,3 +69,17 @@ exports.delete = catchAsync(async (req, res, next) => {
     cuenta_clienteDeleted,
   });
 });
+
+exports.findByUserAndType = catchAsync(async (req, res, next) => {
+  const { userId, typeMovementId } = req.params;
+  const cuenta_clientes = await cuenta_clientesServices.findByUserAndType(
+    userId,
+    typeMovementId
+  );
+
+  return res.status(200).json({
+    status: 'success',
+    results: cuenta_clientes.length,
+    cuenta_clientes,
+  });
+});

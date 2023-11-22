@@ -42,6 +42,20 @@ class Cuenta_clientesServices {
     const cuenta_cliente = await this.findOne(cuenta_clienteId);
     return await cuenta_cliente.update({ status: false });
   }
+  async findByUserAndType(customerId, typeMovementId) {
+    const cuenta_clientes = await db.Cuenta_cliente.findAll({
+      where: {
+        customer_id: customerId,
+        typemovement_id: typeMovementId,
+        status: true,
+      },
+      include: [
+        { model: db.Customer, include: [{ model: db.Branch }] },
+        { model: db.Type_movement },
+      ],
+    });
+    return cuenta_clientes;
+  }
 }
 
 module.exports = Cuenta_clientesServices;

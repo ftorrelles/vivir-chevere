@@ -16,4 +16,9 @@ cuenta_clienteRouter
   .delete(cuenta_clientesController.delete)
   .patch(cuenta_clientesController.update);
 
+// Nueva ruta para encontrar cuentas por usuario y tipo de movimiento
+cuenta_clienteRouter
+  .route('/user/:userId/movement/:typeMovementId')
+  .get(cuenta_clientesController.findByUserAndType);
+
 module.exports = cuenta_clienteRouter;
