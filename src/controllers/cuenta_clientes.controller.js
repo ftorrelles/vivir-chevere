@@ -71,15 +71,26 @@ exports.delete = catchAsync(async (req, res, next) => {
 });
 
 exports.findByUserAndType = catchAsync(async (req, res, next) => {
-  const { userId, typeMovementId } = req.params;
+  const { customerId, typeMovementId } = req.params;
   const cuenta_clientes = await cuenta_clientesServices.findByUserAndType(
-    userId,
-    typeMovementId
+    customerId || null,
+    typeMovementId || null
   );
+  //calcular el total del saldo tanto de cuenta por cobrar como cuenta por pagar
+  const totalIngreso = cuenta_clientes.reduce(
+    (total, balance) => total + parseFloat(balance.ingreso),
+    0
+  );
+  const totalEgreso = cuenta_clientes.reduce(
+    (total, balance) => total + parseFloat(balance.egreso),
+    0
+  );
+  const nuevoSaldo = (totalIngreso - totalEgreso).toFixed(2);
+  const new_cuenta_cliente = [...cuenta_clientes, nuevoSaldo];
 
   return res.status(200).json({
     status: 'success',
     results: cuenta_clientes.length,
-    cuenta_clientes,
+    new_cuenta_cliente,
   });
 });
