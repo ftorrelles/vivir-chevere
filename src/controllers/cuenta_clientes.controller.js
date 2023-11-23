@@ -86,7 +86,11 @@ exports.findByUserAndType = catchAsync(async (req, res, next) => {
     0
   );
   const nuevoSaldo = (totalIngreso - totalEgreso).toFixed(2);
-  const new_cuenta_cliente = [...cuenta_clientes, nuevoSaldo];
+  // const new_cuenta_cliente = [...cuenta_clientes, nuevoSaldo];
+  const new_cuenta_cliente = {
+    total: nuevoSaldo,
+    balance: cuenta_clientes,
+  };
 
   return res.status(200).json({
     status: 'success',
