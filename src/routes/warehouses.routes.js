@@ -16,4 +16,9 @@ warehousesRouter
   .delete(warehousesController.delete)
   .patch(warehousesController.update);
 
+// Nueva ruta para encontrar cuentas por usuario y tipo de movimiento
+warehousesRouter
+  .route('/by-branch/:customerId')
+  .get(warehousesController.findByBranch);
+
 module.exports = warehousesRouter;

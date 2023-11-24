@@ -64,3 +64,22 @@ exports.delete = catchAsync(async (req, res, next) => {
     warehouseDeleted,
   });
 });
+
+//funcion para devolver almacen filtradas por sede
+exports.findByBranch = catchAsync(async (req, res, next) => {
+  const { customerId } = req.params;
+  const warehouses = await warehousesServices.findByBranch(customerId || null);
+  const totalStock = warehouses.reduce(
+    (subtotal, warehouse) => subtotal + warehouse.quantity,
+    0
+  );
+  const warehousesWithTotal = {
+    totalStock,
+    warehouses,
+  };
+  return res.status(200).json({
+    status: 'success',
+    results: warehouses.length,
+    warehousesWithTotal,
+  });
+});

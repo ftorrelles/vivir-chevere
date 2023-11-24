@@ -69,7 +69,7 @@ exports.delete = catchAsync(async (req, res, next) => {
     cuenta_clienteDeleted,
   });
 });
-
+//funcion para devolver las cuentas por cobrar y pagar de una sede filtradas por customer y por tipo de movimiento
 exports.findByUserAndType = catchAsync(async (req, res, next) => {
   const { customerId, typeMovementId } = req.params;
   const cuenta_clientes = await cuenta_clientesServices.findByUserAndType(

@@ -63,6 +63,40 @@ class WarehousesServices {
     const warehouse = await this.findOne(warehouseId);
     return await warehouse.update({ quantity: newQuantity });
   }
+
+  async findByBranch(customerId) {
+    const customer = await db.Customer.findOne({
+      where: {
+        id: customerId,
+        status: true,
+      },
+      include: [{ model: db.Branch }],
+    });
+    if (!customer) {
+      throw new AppError(`Customer with id ${customerId} not found`, 404);
+    }
+    const isAdmin = customer && customer.role_id === 3;
+    const branch = customer?.Branches[0]?.id;
+    if (!branch && !isAdmin) {
+      throw new AppError(`Customer with id ${customerId} without branch`, 404);
+    }
+    let fiteredWarehouse;
+    if (isAdmin) {
+      fiteredWarehouse = await db.Warehouse.findAll({
+        where: {
+          status: true,
+        },
+      });
+    } else {
+      fiteredWarehouse = await db.Warehouse.findAll({
+        where: {
+          branch_id: branch,
+          status: true,
+        },
+      });
+    }
+    return fiteredWarehouse;
+  }
 }
 
 module.exports = WarehousesServices;
