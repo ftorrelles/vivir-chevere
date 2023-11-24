@@ -68,7 +68,7 @@ class Cuenta_clientesServices {
       include: [
         {
           model: db.Customer,
-          include: [{ model: db.Branch }, { model: db.Movement }],
+          include: [{ model: db.Branch }],
         },
         { model: db.Type_movement },
       ],
