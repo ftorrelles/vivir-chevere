@@ -66,7 +66,10 @@ class Cuenta_clientesServices {
     const cuenta_clientes = await db.Cuenta_cliente.findAll({
       where: whereClause,
       include: [
-        { model: db.Customer, include: [{ model: db.Branch }] },
+        {
+          model: db.Customer,
+          include: [{ model: db.Branch }, { model: db.Movement }],
+        },
         { model: db.Type_movement },
       ],
     });
