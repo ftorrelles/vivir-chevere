@@ -18,7 +18,7 @@ cuenta_clienteRouter
 
 // Nueva ruta para encontrar cuentas por usuario y tipo de movimiento
 cuenta_clienteRouter
-  .route('/:customerId/:typeMovementId')
+  .route('/customerId/:customerId/typeMovement/:typeMovementId')
   .get(cuenta_clientesController.findByUserAndType);
 
 module.exports = cuenta_clienteRouter;
