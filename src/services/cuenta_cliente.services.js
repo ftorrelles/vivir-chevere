@@ -70,6 +70,7 @@ class Cuenta_clientesServices {
           model: db.Customer,
           include: [{ model: db.Branch }],
         },
+        { model: db.Movement },
       ],
     });
     return cuenta_clientes;
