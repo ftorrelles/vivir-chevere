@@ -59,7 +59,7 @@ exports.create = catchAsync(async (req, res, next) => {
       movement_items.map(async (item) => {
         const { product_id, quantity, total_line, status } = item;
         // console.log(product_id);
-        // Verificar si es un producto afiliador
+        // Verificar si es un producto afiliador y si es una compra
         if (product_id == 25 && typemovement_id == 1) {
           //colocar el id de los productos que afilian
           // Primero, asegúrate de que el cliente exista
@@ -154,6 +154,7 @@ exports.create = catchAsync(async (req, res, next) => {
         ingreso: cuentaPorPagar,
         egreso: 0,
         status: true,
+        movement_id: movementId,
       });
       // Crear un registro en la tabla cuenta_clientes de la cuenta por cobrar de la sede
       await db.Cuenta_cliente.create({
@@ -162,6 +163,7 @@ exports.create = catchAsync(async (req, res, next) => {
         ingreso: cuentaPorCobrar,
         egreso: 0,
         status: true,
+        movement_id: movementId,
       });
     }
     return res.status(201).json({

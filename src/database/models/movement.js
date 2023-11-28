@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'dispatcher_id',
         as: 'dispatcher',
       });
+      Movement.hasMany(models.Cuenta_cliente, {
+        foreignKey: 'movement_id',
+      });
     }
   }
   Movement.init(

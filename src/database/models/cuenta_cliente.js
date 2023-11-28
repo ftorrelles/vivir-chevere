@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       Cuenta_cliente.belongsTo(models.Customer, {
         foreignKey: 'customer_id',
       });
+      Cuenta_cliente.belongsTo(models.Movement, {
+        foreignKey: 'movement_id',
+      });
     }
   }
   Cuenta_cliente.init(
@@ -62,6 +65,14 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: Sequelize.literal(
           'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ),
+      },
+      movement_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          table: 'movements',
+          field: 'id',
+        },
       },
     },
     {
