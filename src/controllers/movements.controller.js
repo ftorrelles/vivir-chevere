@@ -65,11 +65,29 @@ exports.create = catchAsync(async (req, res, next) => {
           // Primero, asegúrate de que el cliente exista
           const customer = await customerServices.findOne(customer_id);
           // console.log(customer.id);
-          if (customer) {
-            // Si el cliente existe, puedes actualizar su tipo de cliente a afiliado
+          const isAfiliate = customer.type_customer_id === 1;
+          if (!isAfiliate) {
+            // si no es afiliado actualizar su tipo de cliente a afiliado
             await customerServices.update(customer.id, { type_customer_id: 1 });
           } else {
-            console.error('El cliente no existe.');
+            // Si ya es afiliado genera una nueva fila en la tabla customer, este sera un codigo para afiliar (disponible para que afilie desde la oficina virtual)
+            for (let i = 0; i < quantity; i++) {
+              const code = Date.now();
+              await customerServices.create({
+                first_name: `codigo#${code}`,
+                last_name: `codigo#${code}`,
+                identification_document: code,
+                email: `${code}@referido.com`,
+                phone: `${code}`,
+                birthdate: '1954-10-31',
+                type_customer_id: 1,
+                role_id: 1,
+                password: `${code}`,
+                ref: customer.id,
+                user_name: `${code}`,
+                status: false,
+              });
+            }
           }
         }
         // Luego, crea el objeto movement_items
