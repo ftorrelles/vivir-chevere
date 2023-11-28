@@ -67,6 +67,10 @@ class Cuenta_clientesServices {
       where: whereClause,
       include: [
         {
+          model: db.Customer,
+          include: [{ model: db.Branch }],
+        },
+        {
           model: db.Movement,
           include: [{ model: db.Customer, as: 'customer' }],
         },
