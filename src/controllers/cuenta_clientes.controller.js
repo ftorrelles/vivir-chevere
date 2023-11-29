@@ -13,7 +13,14 @@ exports.findAll = catchAsync(async (req, res, next) => {
   });
 });
 exports.create = catchAsync(async (req, res, next) => {
-  const { typemovement_id, customer_id, ingreso, egreso, status } = req.body;
+  const {
+    typemovement_id,
+    customer_id,
+    ingreso,
+    egreso,
+    status,
+    verified_payment,
+  } = req.body;
 
   const cuenta_cliente = await cuenta_clientesServices.create({
     typemovement_id,
@@ -21,6 +28,7 @@ exports.create = catchAsync(async (req, res, next) => {
     ingreso,
     egreso,
     status,
+    verified_payment,
   });
   return res.status(201).json({
     status: 'Success',
@@ -39,7 +47,14 @@ exports.findOne = catchAsync(async (req, res, next) => {
 });
 exports.update = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { typemovement_id, customer_id, ingreso, egreso, status } = req.body;
+  const {
+    typemovement_id,
+    customer_id,
+    ingreso,
+    egreso,
+    status,
+    verified_payment,
+  } = req.body;
 
   const cuenta_cliente = await cuenta_clientesServices.findOne(id);
   const cuenta_clienteUpdated = await cuenta_clientesServices.update(
@@ -50,6 +65,7 @@ exports.update = catchAsync(async (req, res, next) => {
       ingreso,
       egreso,
       status,
+      verified_payment,
     }
   );
   return res.status(200).json({

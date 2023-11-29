@@ -74,6 +74,10 @@ module.exports = (sequelize, DataTypes) => {
           field: 'id',
         },
       },
+      verified_payment: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
     },
     {
       sequelize,
