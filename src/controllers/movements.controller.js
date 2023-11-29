@@ -80,7 +80,7 @@ exports.create = catchAsync(async (req, res, next) => {
                 email: `${code}@referido.com`,
                 phone: `${code}`,
                 birthdate: '1954-10-31',
-                type_customer_id: 1,
+                type_customer_id: 3,
                 role_id: 1,
                 password: `${code}`,
                 ref: customer.id,
