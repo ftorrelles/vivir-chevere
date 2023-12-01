@@ -98,7 +98,9 @@ exports.findByUserAndType = catchAsync(async (req, res, next) => {
     0
   );
   const totalEgreso = cuenta_clientes.reduce(
-    (total, balance) => total + parseFloat(balance.egreso),
+    (total, balance) =>
+      //verifica si el pago fue verificado
+      balance.verified_payment ? total + parseFloat(balance?.egreso) : total,
     0
   );
   const nuevoSaldo = (totalIngreso - totalEgreso).toFixed(2);
